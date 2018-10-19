@@ -5,9 +5,9 @@ namespace RandomImageViewer
 {
     public partial class InputDirControl : UserControl
     {
-        private frmMain MainForm;
+        private MainForm MainForm;
 
-        public InputDirControl(frmMain main, string path)
+        public InputDirControl(MainForm main, string path)
         {
             InitializeComponent();
             MainForm = main;

@@ -1,6 +1,6 @@
 ﻿namespace RandomImageViewer
 {
-    partial class frmAddDirDirect
+    partial class AddDirectoryForm
     {
         /// <summary>
         /// Required designer variable.

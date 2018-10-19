@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace RandomImageViewer
 {
-    public partial class frmMain : Form
+    public partial class MainForm : Form
     {
         private enum Mode
         {
@@ -26,7 +26,7 @@ namespace RandomImageViewer
         private List<SelectablePictureBox> Thumbnails = new List<SelectablePictureBox>();
         private int SelectedThumbnail = 0;
 
-        public frmMain()
+        public MainForm()
         {
             InitializeComponent();
             if (Properties.Settings.Default.Location.X != -1 && Properties.Settings.Default.Location.Y != -1)
@@ -259,7 +259,7 @@ namespace RandomImageViewer
 
         private void AddDirectory()
         {
-            frmAddDirDirect AddDirDialog = new frmAddDirDirect();
+            AddDirectoryForm AddDirDialog = new AddDirectoryForm();
             AddDirDialog.StartPosition = FormStartPosition.CenterParent;
             switch (AddDirDialog.ShowDialog(this))
             {

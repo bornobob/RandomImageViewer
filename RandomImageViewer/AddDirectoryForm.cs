@@ -4,11 +4,11 @@ using System.Windows.Forms;
 
 namespace RandomImageViewer
 {
-    public partial class frmAddDirDirect : Form
+    public partial class AddDirectoryForm : Form
     {
         private string Path;
 
-        public frmAddDirDirect()
+        public AddDirectoryForm()
         {
             InitializeComponent();
         }
