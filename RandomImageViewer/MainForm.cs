@@ -414,5 +414,13 @@ namespace RandomImageViewer
         {
             SelectThumbnail((SelectablePictureBox)sender);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            (new SettingsForm()
+            {
+                StartPosition = FormStartPosition.CenterParent
+            }).ShowDialog();
+        }
     }
 }

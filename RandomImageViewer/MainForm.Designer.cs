@@ -53,6 +53,7 @@
             this.ButtonReload = new System.Windows.Forms.Button();
             this.SlideshowTimer = new System.Windows.Forms.Timer(this.components);
             this.HistoryPanel = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -65,7 +66,7 @@
             // 
             this.MainPictureBox.BackColor = System.Drawing.Color.Transparent;
             this.MainPictureBox.Location = new System.Drawing.Point(4, 10);
-            this.MainPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MainPictureBox.Margin = new System.Windows.Forms.Padding(4);
             this.MainPictureBox.Name = "MainPictureBox";
             this.MainPictureBox.Size = new System.Drawing.Size(897, 438);
             this.MainPictureBox.TabIndex = 0;
@@ -81,7 +82,7 @@
             this.pnlMain.BackColor = System.Drawing.Color.Transparent;
             this.pnlMain.Controls.Add(this.MainPictureBox);
             this.pnlMain.Location = new System.Drawing.Point(3, 137);
-            this.pnlMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlMain.Margin = new System.Windows.Forms.Padding(4);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(905, 448);
             this.pnlMain.TabIndex = 1;
@@ -95,9 +96,9 @@
             this.groupBox1.Controls.Add(this.RadioSeq);
             this.groupBox1.Controls.Add(this.RadioRandom);
             this.groupBox1.Location = new System.Drawing.Point(9, 4);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(253, 123);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
@@ -109,7 +110,7 @@
             this.CloseOnEsc.Checked = true;
             this.CloseOnEsc.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CloseOnEsc.Location = new System.Drawing.Point(8, 84);
-            this.CloseOnEsc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CloseOnEsc.Margin = new System.Windows.Forms.Padding(4);
             this.CloseOnEsc.Name = "CloseOnEsc";
             this.CloseOnEsc.Size = new System.Drawing.Size(129, 21);
             this.CloseOnEsc.TabIndex = 9;
@@ -121,7 +122,7 @@
             this.SlideshowTiming.DecimalPlaces = 1;
             this.SlideshowTiming.InterceptArrowKeys = false;
             this.SlideshowTiming.Location = new System.Drawing.Point(163, 49);
-            this.SlideshowTiming.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SlideshowTiming.Margin = new System.Windows.Forms.Padding(4);
             this.SlideshowTiming.Maximum = new decimal(new int[] {
             128,
             0,
@@ -155,7 +156,7 @@
             // 
             this.RadioSeq.AutoSize = true;
             this.RadioSeq.Location = new System.Drawing.Point(103, 23);
-            this.RadioSeq.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RadioSeq.Margin = new System.Windows.Forms.Padding(4);
             this.RadioSeq.Name = "RadioSeq";
             this.RadioSeq.Size = new System.Drawing.Size(96, 21);
             this.RadioSeq.TabIndex = 1;
@@ -167,7 +168,7 @@
             // 
             this.RadioRandom.AutoSize = true;
             this.RadioRandom.Location = new System.Drawing.Point(8, 23);
-            this.RadioRandom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RadioRandom.Margin = new System.Windows.Forms.Padding(4);
             this.RadioRandom.Name = "RadioRandom";
             this.RadioRandom.Size = new System.Drawing.Size(82, 21);
             this.RadioRandom.TabIndex = 0;
@@ -182,7 +183,7 @@
             this.InputDirsPanel.AutoScroll = true;
             this.InputDirsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.InputDirsPanel.Location = new System.Drawing.Point(9, 134);
-            this.InputDirsPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.InputDirsPanel.Margin = new System.Windows.Forms.Padding(4);
             this.InputDirsPanel.Name = "InputDirsPanel";
             this.InputDirsPanel.Size = new System.Drawing.Size(253, 115);
             this.InputDirsPanel.TabIndex = 3;
@@ -191,7 +192,7 @@
             // 
             this.ButtonAddDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonAddDir.Location = new System.Drawing.Point(163, 257);
-            this.ButtonAddDir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ButtonAddDir.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonAddDir.Name = "ButtonAddDir";
             this.ButtonAddDir.Size = new System.Drawing.Size(100, 28);
             this.ButtonAddDir.TabIndex = 4;
@@ -212,6 +213,7 @@
             // 
             this.OptionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.OptionsPanel.Controls.Add(this.button1);
             this.OptionsPanel.Controls.Add(this.SlideshowButton);
             this.OptionsPanel.Controls.Add(this.groupBox2);
             this.OptionsPanel.Controls.Add(this.ButtonReload);
@@ -219,7 +221,7 @@
             this.OptionsPanel.Controls.Add(this.InputDirsPanel);
             this.OptionsPanel.Controls.Add(this.ButtonAddDir);
             this.OptionsPanel.Location = new System.Drawing.Point(919, 2);
-            this.OptionsPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OptionsPanel.Margin = new System.Windows.Forms.Padding(4);
             this.OptionsPanel.Name = "OptionsPanel";
             this.OptionsPanel.Size = new System.Drawing.Size(267, 582);
             this.OptionsPanel.TabIndex = 8;
@@ -227,9 +229,9 @@
             // SlideshowButton
             // 
             this.SlideshowButton.Location = new System.Drawing.Point(9, 293);
-            this.SlideshowButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SlideshowButton.Margin = new System.Windows.Forms.Padding(4);
             this.SlideshowButton.Name = "SlideshowButton";
-            this.SlideshowButton.Size = new System.Drawing.Size(253, 28);
+            this.SlideshowButton.Size = new System.Drawing.Size(254, 28);
             this.SlideshowButton.TabIndex = 14;
             this.SlideshowButton.Text = "Begin Slideshow";
             this.SlideshowButton.UseVisualStyleBackColor = true;
@@ -245,9 +247,9 @@
             this.groupBox2.Controls.Add(this.NoImagesLabel);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(4, 430);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(259, 149);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
@@ -316,7 +318,7 @@
             // ButtonReload
             // 
             this.ButtonReload.Location = new System.Drawing.Point(9, 257);
-            this.ButtonReload.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ButtonReload.Margin = new System.Windows.Forms.Padding(4);
             this.ButtonReload.Name = "ButtonReload";
             this.ButtonReload.Size = new System.Drawing.Size(100, 28);
             this.ButtonReload.TabIndex = 12;
@@ -333,12 +335,24 @@
             this.HistoryPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.HistoryPanel.Location = new System.Drawing.Point(4, 2);
-            this.HistoryPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.HistoryPanel.Margin = new System.Windows.Forms.Padding(4);
             this.HistoryPanel.Name = "HistoryPanel";
             this.HistoryPanel.Size = new System.Drawing.Size(904, 137);
             this.HistoryPanel.TabIndex = 9;
             // 
-            // frmMain
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(162, 394);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Options";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -349,9 +363,9 @@
             this.Controls.Add(this.SinkLabel);
             this.Controls.Add(this.pnlMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1203, 622);
-            this.Name = "frmMain";
+            this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Random Image Viewer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
@@ -395,6 +409,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox CloseOnEsc;
         private System.Windows.Forms.Panel HistoryPanel;
+        private System.Windows.Forms.Button button1;
     }
 }
 
