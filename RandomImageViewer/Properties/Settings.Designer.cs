@@ -60,18 +60,6 @@ namespace RandomImageViewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CloseOnEsc {
-            get {
-                return ((bool)(this["CloseOnEsc"]));
-            }
-            set {
-                this["CloseOnEsc"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("907, 514")]
         public global::System.Drawing.Size WindowSize {
             get {
@@ -103,6 +91,90 @@ namespace RandomImageViewer.Properties {
             }
             set {
                 this["Location"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public int ToggleZoom {
+            get {
+                return ((int)(this["ToggleZoom"]));
+            }
+            set {
+                this["ToggleZoom"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("190")]
+        public int ZoomIn {
+            get {
+                return ((int)(this["ZoomIn"]));
+            }
+            set {
+                this["ZoomIn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("188")]
+        public int ZoomOut {
+            get {
+                return ((int)(this["ZoomOut"]));
+            }
+            set {
+                this["ZoomOut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("122")]
+        public int HideOptions {
+            get {
+                return ((int)(this["HideOptions"]));
+            }
+            set {
+                this["HideOptions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("121")]
+        public int HideThumbnails {
+            get {
+                return ((int)(this["HideThumbnails"]));
+            }
+            set {
+                this["HideThumbnails"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("27")]
+        public int QuitProgram {
+            get {
+                return ((int)(this["QuitProgram"]));
+            }
+            set {
+                this["QuitProgram"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("32")]
+        public int NextImage {
+            get {
+                return ((int)(this["NextImage"]));
+            }
+            set {
+                this["NextImage"] = value;
             }
         }
     }

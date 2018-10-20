@@ -11,9 +11,6 @@
     <Setting Name="WaitDuration" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5000</Value>
     </Setting>
-    <Setting Name="CloseOnEsc" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="WindowSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">907, 514</Value>
     </Setting>
@@ -22,6 +19,27 @@
     </Setting>
     <Setting Name="Location" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">-1, -1</Value>
+    </Setting>
+    <Setting Name="ToggleZoom" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">90</Value>
+    </Setting>
+    <Setting Name="ZoomIn" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">190</Value>
+    </Setting>
+    <Setting Name="ZoomOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">188</Value>
+    </Setting>
+    <Setting Name="HideOptions" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">122</Value>
+    </Setting>
+    <Setting Name="HideThumbnails" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">121</Value>
+    </Setting>
+    <Setting Name="QuitProgram" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">27</Value>
+    </Setting>
+    <Setting Name="NextImage" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">32</Value>
     </Setting>
   </Settings>
 </SettingsFile>

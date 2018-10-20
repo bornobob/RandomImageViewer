@@ -25,6 +25,7 @@ namespace RandomImageViewer
         private int NumberOfThumbnails = 10;
         private List<SelectablePictureBox> Thumbnails = new List<SelectablePictureBox>();
         private int SelectedThumbnail = 0;
+        private KeybindSettingsData KeybindSettings = new KeybindSettingsData();
 
         public MainForm()
         {
@@ -67,7 +68,6 @@ namespace RandomImageViewer
                 }
                 LoadImages();
             }
-            CloseOnEsc.Checked = Properties.Settings.Default.CloseOnEsc;
             if (this.StartPosition == FormStartPosition.Manual)
             {
                 this.Location = Properties.Settings.Default.Location;
@@ -93,7 +93,6 @@ namespace RandomImageViewer
             {
                 Properties.Settings.Default.Paths.Add(inputDir.GetPath());
             }
-            Properties.Settings.Default.CloseOnEsc = CloseOnEsc.Checked;
             Properties.Settings.Default.WindowSize = this.Size;
             Properties.Settings.Default.State = this.WindowState;
             if (this.WindowState == FormWindowState.Normal)
@@ -131,7 +130,7 @@ namespace RandomImageViewer
 
         public void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Z)
+            if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleZoom))
             {
                 if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
                 {
@@ -144,26 +143,26 @@ namespace RandomImageViewer
                 ZoomFactor = 1;
                 SetPictureZoomSize();
             }
-            else if (e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.Oemcomma)
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn) || e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomOut))
             {
                 if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
                 {
-                    if (e.KeyCode == Keys.OemPeriod)
+                    if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn))
                     {
                         ZoomFactor *= 1.1m;
                     }
-                    else if (e.KeyCode == Keys.Oemcomma)
+                    else
                     {
                         ZoomFactor *= .9m;
                     }
                     SetPictureZoomSize();
                 }
             }
-            else if (e.KeyCode == Keys.Space)
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.NextImage))
             {
                 SetImage(true);
             }
-            else if (e.KeyCode == Keys.F11)
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideOptions))
             {
                 OptionsPanel.Visible = !OptionsPanel.Visible;
                 if (!OptionsPanel.Visible)
@@ -179,12 +178,9 @@ namespace RandomImageViewer
                 SetPictureZoomSize();
                 ResizeThumbnails();                
             }
-            else if (e.KeyCode == Keys.Escape)
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.QuitProgram))
             {
-                if (CloseOnEsc.Checked)
-                {
-                    this.Close();
-                }
+                this.Close();
             }
         }
 
@@ -404,7 +400,7 @@ namespace RandomImageViewer
                 CurrentImageLabel.Text = path.Substring(lastBackslash + 1, path.Length - lastBackslash - 1);
                 CurrentDirLabel.Text = path.Substring(0, lastBackslash);
                 ZoomFactor = 1;
-                this.Text = "Random Image Viewer     -     " + path;
+                this.Text = "Random Image Viewer - " + path;
                 SetPictureZoomSize();
                 SelectedThumbnail = Thumbnails.IndexOf(selected);
             }
@@ -421,6 +417,8 @@ namespace RandomImageViewer
             {
                 StartPosition = FormStartPosition.CenterParent
             }).ShowDialog();
+            SinkLabel.Focus();
+            KeybindSettings.LoadSettings();
         }
     }
 }
