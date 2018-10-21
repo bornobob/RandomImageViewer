@@ -76,19 +76,25 @@ namespace RandomImageViewer
 
         private TextBox GetTextBoxByTag(KeybindSettings tag)
         {
-            foreach (Control c in KeybindsGroupBox.Controls)
+            switch (tag)
             {
-                try
-                {
-                    TextBox box = (TextBox)c;
-                    if ((KeybindSettings)box.Tag == tag)
-                    {
-                        return box;
-                    }
-                }
-                catch (InvalidCastException) { }
+                case KeybindSettings.HideOptions:
+                    return HideOptionsButton;
+                case KeybindSettings.HideThumbnails:
+                    return HideThumbnailsButton;
+                case KeybindSettings.NextImage:
+                    return NextImageButton;
+                case KeybindSettings.QuitProgram:
+                    return CloseProgramButton;
+                case KeybindSettings.ToggleZoom:
+                    return ToggleButton;
+                case KeybindSettings.ZoomIn:
+                    return ZoomInButton;
+                case KeybindSettings.ZoomOut:
+                    return ZoomOutButton;
+                default:
+                    return null;
             }
-            return null;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
