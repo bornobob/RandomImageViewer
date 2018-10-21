@@ -104,7 +104,7 @@
             this.SlideshowTiming.InterceptArrowKeys = false;
             this.SlideshowTiming.Location = new System.Drawing.Point(122, 40);
             this.SlideshowTiming.Maximum = new decimal(new int[] {
-            128,
+            7680,
             0,
             0,
             0});
