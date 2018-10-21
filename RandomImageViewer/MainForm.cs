@@ -130,6 +130,11 @@ namespace RandomImageViewer
 
         public void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.F10)
+            {
+                e.SuppressKeyPress = true;
+            }
+
             if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleZoom))
             {
                 if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
@@ -181,6 +186,24 @@ namespace RandomImageViewer
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.QuitProgram))
             {
                 this.Close();
+            }
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideThumbnails))
+            {
+                HistoryPanel.Visible = !HistoryPanel.Visible;
+                if (!HistoryPanel.Visible)
+                {
+                    pnlMain.Location = new Point(2, 2);
+                    pnlMain.Height += HistoryPanel.Height;
+                    ResizeThumbnails();
+                }
+                else
+                {
+                    pnlMain.Height -= HistoryPanel.Height;
+                    pnlMain.Location = new Point(2, HistoryPanel.Height + HistoryPanel.Location.Y);
+                }
+                SetPictureZoomSize();
+                SinkLabel.Focus();
+                this.BringToFront();
             }
         }
 
