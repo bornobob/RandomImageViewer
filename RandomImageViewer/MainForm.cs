@@ -334,6 +334,7 @@ namespace RandomImageViewer
         private void ButtonReload_Click(object sender, EventArgs e)
         {
             LoadImages();
+            SinkLabel.Focus();
         }
 
         private void RadioRandom_CheckedChanged(object sender, EventArgs e)
