@@ -26,6 +26,7 @@ namespace RandomImageViewer
         private List<SelectablePictureBox> Thumbnails = new List<SelectablePictureBox>();
         private int SelectedThumbnail = 0;
         private KeybindSettingsData KeybindSettings = new KeybindSettingsData();
+        private ContextMenu PictureBoxContextMenu = new ContextMenu();
 
         public MainForm()
         {
@@ -35,6 +36,10 @@ namespace RandomImageViewer
                 this.StartPosition = FormStartPosition.Manual;
             }
             this.KeyPreview = true;
+
+            var menuItem = new MenuItem("Open image in folder");
+            menuItem.Click += new EventHandler(MainPictureBoxContextMenu_ItemClicked);
+            PictureBoxContextMenu.MenuItems.Add(menuItem);
 
             LoadSettings();
         }
@@ -317,6 +322,13 @@ namespace RandomImageViewer
             {
                 SinkLabel.Focus();
             }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (CurrentImage != null)
+                {
+                    PictureBoxContextMenu.Show(MainPictureBox, e.Location);
+                }
+            }
         }
 
         private void ButtonReload_Click(object sender, EventArgs e)
@@ -442,6 +454,16 @@ namespace RandomImageViewer
             }).ShowDialog();
             SinkLabel.Focus();
             KeybindSettings.LoadSettings();
+        }
+
+        private void MainPictureBoxContextMenu_ItemClicked(object sender, EventArgs e)
+        {
+            if (LastIndex < ImagePaths.Count)
+            {
+                string path = ImagePaths[LastIndex];
+                string arg = "/select, \"" + path.Replace('/', '\\') + "\"";
+                System.Diagnostics.Process.Start("explorer.exe", arg);
+            }
         }
     }
 }
