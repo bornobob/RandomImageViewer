@@ -27,6 +27,7 @@ namespace RandomImageViewer
         private int SelectedThumbnail = 0;
         private KeybindSettingsData KeybindSettings = new KeybindSettingsData();
         private ContextMenu PictureBoxContextMenu = new ContextMenu();
+        private SearchOption ImageLoadingSearchOption;
 
         public MainForm()
         {
@@ -61,6 +62,8 @@ namespace RandomImageViewer
             {
                 value = 1.5m;
             }
+            ImageLoadingSearchOption = Properties.Settings.Default.SearchOption;
+            TraverseSubdirectoriesCheckBox.Checked = ImageLoadingSearchOption == SearchOption.AllDirectories;
             SlideshowTiming.Value = value;
             if (Properties.Settings.Default.Paths != null)
             {
@@ -106,6 +109,7 @@ namespace RandomImageViewer
                 Properties.Settings.Default.Location = this.Location;
             }
             Properties.Settings.Default.Save();
+            Properties.Settings.Default.SearchOption = ImageLoadingSearchOption;
         }
 
         private void LoadImages()
@@ -114,7 +118,7 @@ namespace RandomImageViewer
             foreach (InputDirControl inputDir in InputDirs)
             {
                 string path = inputDir.GetPath();
-                string[] imgArray = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
+                string[] imgArray = Directory.GetFiles(path, "*", ImageLoadingSearchOption);
 
                 foreach (string s in imgArray)
                 {
@@ -465,6 +469,19 @@ namespace RandomImageViewer
                 string arg = "/select, \"" + path.Replace('/', '\\') + "\"";
                 System.Diagnostics.Process.Start("explorer.exe", arg);
             }
+        }
+
+        private void TraverseSubdirectoriesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (TraverseSubdirectoriesCheckBox.Checked)
+            {
+                ImageLoadingSearchOption = SearchOption.AllDirectories;
+            }
+            else
+            {
+                ImageLoadingSearchOption = SearchOption.TopDirectoryOnly;
+            }
+            LoadImages();
         }
     }
 }

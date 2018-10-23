@@ -41,5 +41,8 @@
     <Setting Name="NextImage" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">32</Value>
     </Setting>
+    <Setting Name="SearchOption" Type="System.IO.SearchOption" Scope="User">
+      <Value Profile="(Default)">AllDirectories</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

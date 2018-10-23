@@ -177,5 +177,17 @@ namespace RandomImageViewer.Properties {
                 this["NextImage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AllDirectories")]
+        public global::System.IO.SearchOption SearchOption {
+            get {
+                return ((global::System.IO.SearchOption)(this["SearchOption"]));
+            }
+            set {
+                this["SearchOption"] = value;
+            }
+        }
     }
 }

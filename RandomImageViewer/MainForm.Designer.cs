@@ -53,6 +53,7 @@
             this.ButtonReload = new System.Windows.Forms.Button();
             this.SlideshowTimer = new System.Windows.Forms.Timer(this.components);
             this.HistoryPanel = new System.Windows.Forms.Panel();
+            this.TraverseSubdirectoriesCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -87,13 +88,14 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.TraverseSubdirectoriesCheckBox);
             this.groupBox1.Controls.Add(this.SlideshowTiming);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.RadioSeq);
             this.groupBox1.Controls.Add(this.RadioRandom);
             this.groupBox1.Location = new System.Drawing.Point(7, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(190, 73);
+            this.groupBox1.Size = new System.Drawing.Size(190, 100);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
@@ -313,6 +315,17 @@
             this.HistoryPanel.Size = new System.Drawing.Size(678, 111);
             this.HistoryPanel.TabIndex = 9;
             // 
+            // TraverseSubdirectoriesCheckBox
+            // 
+            this.TraverseSubdirectoriesCheckBox.AutoSize = true;
+            this.TraverseSubdirectoriesCheckBox.Location = new System.Drawing.Point(6, 68);
+            this.TraverseSubdirectoriesCheckBox.Name = "TraverseSubdirectoriesCheckBox";
+            this.TraverseSubdirectoriesCheckBox.Size = new System.Drawing.Size(136, 17);
+            this.TraverseSubdirectoriesCheckBox.TabIndex = 9;
+            this.TraverseSubdirectoriesCheckBox.Text = "Traverse subdirectories";
+            this.TraverseSubdirectoriesCheckBox.UseVisualStyleBackColor = true;
+            this.TraverseSubdirectoriesCheckBox.CheckedChanged += new System.EventHandler(this.TraverseSubdirectoriesCheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -369,6 +382,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel HistoryPanel;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox TraverseSubdirectoriesCheckBox;
     }
 }
 
