@@ -128,31 +128,11 @@ namespace RandomImageViewer
 
             if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleZoom))
             {
-                if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
-                {
-                    MainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                else
-                {
-                    MainPictureBox.SizeMode = PictureBoxSizeMode.Normal;
-                }
-                ZoomFactor = 1m;
-                SetPictureZoomSize();
+                ToggleSizeMode();
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn) || e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomOut))
             {
-                if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
-                {
-                    if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn))
-                    {
-                        ZoomFactor *= 1.1m;
-                    }
-                    else
-                    {
-                        ZoomFactor *= .9m;
-                    }
-                    SetPictureZoomSize();
-                }
+                Zoom(e.KeyCode);
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.NextImage))
             {
@@ -160,19 +140,7 @@ namespace RandomImageViewer
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideOptions))
             {
-                OptionsPanel.Visible = !OptionsPanel.Visible;
-                if (!OptionsPanel.Visible)
-                {
-                    pnlMain.Width += OptionsPanel.Width;
-                    HistoryPanel.Width += OptionsPanel.Width;
-                }
-                else
-                {
-                    pnlMain.Width -= OptionsPanel.Width;
-                    HistoryPanel.Width -= OptionsPanel.Width;
-                }
-                SetPictureZoomSize();
-                ResizeThumbnails();                
+                ToggleOptions();            
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.QuitProgram))
             {
@@ -180,34 +148,101 @@ namespace RandomImageViewer
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideThumbnails))
             {
-                HistoryPanel.Visible = !HistoryPanel.Visible;
-                if (!HistoryPanel.Visible)
+                ToggleHistory();
+            } else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.PrevImage))
+            {
+                PreviousImage();
+            }
+        }
+
+        private void ToggleSizeMode()
+        {
+            if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
+            {
+                MainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            else
+            {
+                MainPictureBox.SizeMode = PictureBoxSizeMode.Normal;
+            }
+            ZoomFactor = 1m;
+            SetPictureZoomSize();
+        }
+
+        private void Zoom(Keys keyCode)
+        {
+            if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
+            {
+                if (keyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn))
                 {
-                    pnlMain.Location = new Point(2, 2);
-                    pnlMain.Height += HistoryPanel.Height;
-                    ResizeThumbnails();
+                    ZoomFactor *= 1.1m;
                 }
                 else
                 {
-                    pnlMain.Height -= HistoryPanel.Height;
-                    pnlMain.Location = new Point(2, HistoryPanel.Height + HistoryPanel.Location.Y);
+                    ZoomFactor *= .9m;
                 }
                 SetPictureZoomSize();
-                SinkLabel.Focus();
-                this.BringToFront();
-            } else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.PrevImage))
+            }
+        }
+
+        private void ToggleOptions()
+        {
+            OptionsPanel.Visible = !OptionsPanel.Visible;
+            if (!OptionsPanel.Visible)
             {
-                ImageList.SelectPreviousImage();
-                SetPictureZoomSize();
-                for (int i=0; i < this.Thumbnails.Count; i++)
+                pnlMain.Width += OptionsPanel.Width;
+                HistoryPanel.Width += OptionsPanel.Width;
+            }
+            else
+            {
+                pnlMain.Width -= OptionsPanel.Width;
+                HistoryPanel.Width -= OptionsPanel.Width;
+            }
+            SetPictureZoomSize();
+            ResizeThumbnails();
+        }
+
+        private void ToggleHistory()
+        {
+            HistoryPanel.Visible = !HistoryPanel.Visible;
+            if (!HistoryPanel.Visible)
+            {
+                pnlMain.Location = new Point(2, 2);
+                pnlMain.Height += HistoryPanel.Height;
+                ResizeThumbnails();
+            }
+            else
+            {
+                pnlMain.Height -= HistoryPanel.Height;
+                pnlMain.Location = new Point(2, HistoryPanel.Height + HistoryPanel.Location.Y);
+            }
+            SetPictureZoomSize();
+            SinkLabel.Focus();
+            this.BringToFront();
+        }
+
+        private void PreviousImage()
+        {
+            ImageList.SelectPreviousImage();
+            SetPictureZoomSize();
+            for (int i = 0; i < this.Thumbnails.Count; i++)
+            {
+                if (this.Thumbnails[i].GetSelected() && i < this.Thumbnails.Count - 1)
                 {
-                    if (this.Thumbnails[i].GetSelected() && i < this.Thumbnails.Count -1)
-                    {
-                        this.Thumbnails[i].SetSelected(false);
-                        this.Thumbnails[i + 1].SetSelected(true);
-                        break;
-                    }
+                    this.Thumbnails[i].SetSelected(false);
+                    this.Thumbnails[i + 1].SetSelected(true);
+                    break;
                 }
+            }
+            ResetTimer();
+        }
+
+        private void ResetTimer()
+        {
+            if (InSlideshow)
+            {
+                SlideshowTimer.Enabled = false;
+                SlideshowTimer.Enabled = true;
             }
         }
 
@@ -244,11 +279,7 @@ namespace RandomImageViewer
                 SetPictureZoomSize();
                 AddHistoryThumbnail(img);
                 SetImageDetailLabels(img);
-                if (manual && InSlideshow)
-                {
-                    SlideshowTimer.Enabled = false;
-                    SlideshowTimer.Enabled = true;
-                }
+                if (manual) ResetTimer();
             }
         }
 
