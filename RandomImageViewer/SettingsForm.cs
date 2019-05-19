@@ -19,6 +19,7 @@ namespace RandomImageViewer
             HideThumbnailsButton.Tag = HideThumbnailsDeleteButton.Tag = KeybindSettings.HideThumbnails;
             CloseProgramButton.Tag = CloseProgramDeleteButton.Tag = KeybindSettings.QuitProgram;
             NextImageButton.Tag = NextImageDeleteButton.Tag = KeybindSettings.NextImage;
+            PrevImageButton.Tag = PrevImageDeleteButton.Tag = KeybindSettings.PrevImage;
 
             SettingsData = new KeybindSettingsData();
             LoadTextboxes();
@@ -88,6 +89,8 @@ namespace RandomImageViewer
                     return ZoomInButton;
                 case KeybindSettings.ZoomOut:
                     return ZoomOutButton;
+                case KeybindSettings.PrevImage:
+                    return PrevImageButton;
                 default:
                     return null;
             }

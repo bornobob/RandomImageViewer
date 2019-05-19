@@ -106,5 +106,13 @@ namespace RandomImageViewer
         {
             return this.Images.Count;
         }
+
+        public void SelectPreviousImage()
+        {
+            if (this.HistoryIndex < this.NrHistory - 1)
+            {
+                this.HistoryIndex += 1;
+            }
+        }
     }
 }

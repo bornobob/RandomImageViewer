@@ -189,5 +189,17 @@ namespace RandomImageViewer.Properties {
                 this["SearchOption"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int PrevImage {
+            get {
+                return ((int)(this["PrevImage"]));
+            }
+            set {
+                this["PrevImage"] = value;
+            }
+        }
     }
 }

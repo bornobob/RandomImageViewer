@@ -44,5 +44,8 @@
     <Setting Name="SearchOption" Type="System.IO.SearchOption" Scope="User">
       <Value Profile="(Default)">AllDirectories</Value>
     </Setting>
+    <Setting Name="PrevImage" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

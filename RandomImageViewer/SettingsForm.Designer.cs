@@ -52,6 +52,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.PrevImageDeleteButton = new System.Windows.Forms.Button();
+            this.PrevImageButton = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.KeybindsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,6 +132,9 @@
             // 
             // KeybindsGroupBox
             // 
+            this.KeybindsGroupBox.Controls.Add(this.PrevImageDeleteButton);
+            this.KeybindsGroupBox.Controls.Add(this.PrevImageButton);
+            this.KeybindsGroupBox.Controls.Add(this.label8);
             this.KeybindsGroupBox.Controls.Add(this.NextImageDeleteButton);
             this.KeybindsGroupBox.Controls.Add(this.NextImageButton);
             this.KeybindsGroupBox.Controls.Add(this.label7);
@@ -152,7 +158,7 @@
             this.KeybindsGroupBox.Controls.Add(this.ZoomInButton);
             this.KeybindsGroupBox.Location = new System.Drawing.Point(12, 12);
             this.KeybindsGroupBox.Name = "KeybindsGroupBox";
-            this.KeybindsGroupBox.Size = new System.Drawing.Size(262, 172);
+            this.KeybindsGroupBox.Size = new System.Drawing.Size(262, 196);
             this.KeybindsGroupBox.TabIndex = 6;
             this.KeybindsGroupBox.TabStop = false;
             this.KeybindsGroupBox.Text = "Key bindings";
@@ -343,6 +349,39 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // PrevImageDeleteButton
+            // 
+            this.PrevImageDeleteButton.Location = new System.Drawing.Point(237, 168);
+            this.PrevImageDeleteButton.Name = "PrevImageDeleteButton";
+            this.PrevImageDeleteButton.Size = new System.Drawing.Size(20, 20);
+            this.PrevImageDeleteButton.TabIndex = 23;
+            this.PrevImageDeleteButton.Text = "X";
+            this.PrevImageDeleteButton.UseVisualStyleBackColor = true;
+            // 
+            // PrevImageButton
+            // 
+            this.PrevImageButton.Location = new System.Drawing.Point(164, 168);
+            this.PrevImageButton.Margin = new System.Windows.Forms.Padding(2);
+            this.PrevImageButton.Name = "PrevImageButton";
+            this.PrevImageButton.ReadOnly = true;
+            this.PrevImageButton.Size = new System.Drawing.Size(68, 20);
+            this.PrevImageButton.TabIndex = 22;
+            this.PrevImageButton.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PrevImageButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeydownSetting);
+            this.PrevImageButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ClickedSetting);
+            this.PrevImageButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SettingsPreviewKeyDown);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 171);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 13);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "Previous image";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -390,5 +429,8 @@
         private System.Windows.Forms.Button NextImageDeleteButton;
         private System.Windows.Forms.TextBox NextImageButton;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button PrevImageDeleteButton;
+        private System.Windows.Forms.TextBox PrevImageButton;
+        private System.Windows.Forms.Label label8;
     }
 }

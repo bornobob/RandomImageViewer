@@ -12,7 +12,8 @@ namespace RandomImageViewer
         HideOptions,
         HideThumbnails,
         QuitProgram,
-        NextImage
+        NextImage,
+        PrevImage
     }
 
     public class KeybindSettingsData

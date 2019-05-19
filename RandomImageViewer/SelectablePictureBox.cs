@@ -51,5 +51,10 @@ namespace RandomImageViewer
         {
             return Path.Combine(this._Image.GetDirectory(), this._Image.GetFileName());
         }
+
+        public bool GetSelected()
+        {
+            return this.Selected;
+        }
     }
 }

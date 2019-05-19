@@ -195,6 +195,19 @@ namespace RandomImageViewer
                 SetPictureZoomSize();
                 SinkLabel.Focus();
                 this.BringToFront();
+            } else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.PrevImage))
+            {
+                ImageList.SelectPreviousImage();
+                SetPictureZoomSize();
+                for (int i=0; i < this.Thumbnails.Count; i++)
+                {
+                    if (this.Thumbnails[i].GetSelected() && i < this.Thumbnails.Count -1)
+                    {
+                        this.Thumbnails[i].SetSelected(false);
+                        this.Thumbnails[i + 1].SetSelected(true);
+                        break;
+                    }
+                }
             }
         }
 
