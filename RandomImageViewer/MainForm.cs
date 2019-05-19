@@ -494,7 +494,8 @@ namespace RandomImageViewer
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (KeybindSettings.GetSettingsContainArrowKeys())
+            if (KeybindSettings.GetSettingsContainArrowKeys() &&
+                (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down))
             {
                 frmMain_KeyDown(null, new KeyEventArgs(keyData));
                 return true;
