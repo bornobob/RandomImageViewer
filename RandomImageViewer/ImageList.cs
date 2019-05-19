@@ -53,16 +53,7 @@ namespace RandomImageViewer
 
         public ImageObject GetCurrentImage()
         {
-            if (this.HistoryIndex > 0)
-            {
-                return this.HistoryImages[this.HistoryIndex];
-            } else if (this.Images.Count <= this.CurrentIndex)
-            {
-                return null;
-            } else
-            {
-                return this.Images[this.CurrentIndex];
-            }
+            return this.HistoryImages[this.HistoryIndex];
         }
 
         public ImageObject GetNextImage(bool random)
