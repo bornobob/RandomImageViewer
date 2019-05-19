@@ -18,10 +18,17 @@ namespace RandomImageViewer
     public class KeybindSettingsData
     {
         private Dictionary<KeybindSettings, int> Settings;
+        private bool SettingsContainArrowKeys;
 
         public KeybindSettingsData()
         {
             LoadSettings();
+            CheckSettingsContainArrowKeys();
+        }
+
+        public bool GetSettingsContainArrowKeys()
+        {
+            return this.SettingsContainArrowKeys;
         }
 
         public void LoadSettings()
@@ -57,7 +64,26 @@ namespace RandomImageViewer
             {
                 Properties.Settings.Default[s.ToString()] = Settings[s];
             }
+            CheckSettingsContainArrowKeys();
             Properties.Settings.Default.Save();
+        }
+
+        private void CheckSettingsContainArrowKeys()
+        {
+            bool containArrowKeys = false;
+            foreach (KeybindSettings s in Settings.Keys)
+            {
+                if (
+                    Settings[s] == (int)System.Windows.Forms.Keys.Right ||
+                    Settings[s] == (int)System.Windows.Forms.Keys.Left ||
+                    Settings[s] == (int)System.Windows.Forms.Keys.Up ||
+                    Settings[s] == (int)System.Windows.Forms.Keys.Down)
+                {
+                    containArrowKeys = true;
+                    break;
+                }
+            }
+            this.SettingsContainArrowKeys = containArrowKeys;
         }
     }
 }

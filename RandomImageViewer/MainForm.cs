@@ -77,6 +77,7 @@ namespace RandomImageViewer
             
             this.WindowState = Properties.Settings.Default.State;
             if (this.WindowState == FormWindowState.Normal) this.Size = Properties.Settings.Default.WindowSize;
+            SinkLabel.Focus();
         }
 
         private void AddDirectoryDirect(string path)
@@ -243,6 +244,7 @@ namespace RandomImageViewer
             CurrentImageLabel.Text = image.GetFileName();
             CurrentDirLabel.Text = image.GetDirectory();
             this.Text = "Random Image Viewer - " + image.GetFileName();
+            SinkLabel.Focus();
         }
 
         private void frmMain_SizeChanged(object sender, EventArgs e)
@@ -262,7 +264,6 @@ namespace RandomImageViewer
         private void AddDirectory()
         {
             AddDirectoryForm AddDirDialog = new AddDirectoryForm();
-            AddDirDialog.StartPosition = FormStartPosition.CenterParent;
             switch (AddDirDialog.ShowDialog(this))
             {
                 case DialogResult.OK:
@@ -445,6 +446,18 @@ namespace RandomImageViewer
                 ImageLoadingSearchOption = SearchOption.TopDirectoryOnly;
             }
             ReloadDirectories();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (KeybindSettings.GetSettingsContainArrowKeys())
+            {
+                frmMain_KeyDown(null, new KeyEventArgs(keyData));
+                return true;
+            } else
+            {
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
         }
     }
 }
