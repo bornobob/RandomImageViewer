@@ -32,14 +32,10 @@ namespace RandomImageViewer
                 {
                     TextBox box = (TextBox)c;
                     int value = SettingsData.GetSetting((KeybindSettings)box.Tag);
-                    string text;
+                    string text = "NONE";
                     if (value != -1)
                     {
                         text = ((Keys)SettingsData.GetSetting((KeybindSettings)box.Tag)).ToString();
-                    }
-                    else
-                    {
-                        text = "NONE";
                     }
                     box.Text = text; 
                 }
@@ -47,7 +43,7 @@ namespace RandomImageViewer
             }
         }
 
-        private void ClickedSetting(Object sender, MouseEventArgs e)
+        private void ClickedSetting(object sender, MouseEventArgs e)
         {
             if (Editing == KeybindSettings.None)
             {
@@ -126,10 +122,10 @@ namespace RandomImageViewer
             CheckForDuplicates();
         }
 
-        private void CheckForDuplicates()
+        private Dictionary<int, List<TextBox>> GetPickedKeys()
         {
             Dictionary<int, List<TextBox>> pickedKeys = new Dictionary<int, List<TextBox>>();
-            bool doubleKeys = false;
+            
             foreach (KeybindSettings s in (KeybindSettings[])Enum.GetValues(typeof(KeybindSettings)))
             {
                 if (s != KeybindSettings.None)
@@ -140,7 +136,6 @@ namespace RandomImageViewer
                         if (pickedKeys.ContainsKey(value))
                         {
                             pickedKeys[value].Add(GetTextBoxByTag(s));
-                            doubleKeys = true;
                         }
                         else
                         {
@@ -150,10 +145,18 @@ namespace RandomImageViewer
                 }
             }
 
-            foreach (List<TextBox> list in pickedKeys.Values)
+            return pickedKeys;
+        }
+
+        private void CheckForDuplicates()
+        {
+            bool doubleKeys = false;
+
+            foreach (List<TextBox> list in GetPickedKeys().Values)
             {
                 if (list.Count > 1)
                 {
+                    doubleKeys = true;
                     foreach (TextBox t in list)
                     {
                         t.BackColor = System.Drawing.Color.DarkRed;

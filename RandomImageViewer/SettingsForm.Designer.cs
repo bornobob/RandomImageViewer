@@ -35,6 +35,9 @@
             this.ZoomOutButton = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.KeybindsGroupBox = new System.Windows.Forms.GroupBox();
+            this.NextImageDeleteButton = new System.Windows.Forms.Button();
+            this.NextImageButton = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.CloseProgramDeleteButton = new System.Windows.Forms.Button();
             this.HideThumbnailsDeleteButton = new System.Windows.Forms.Button();
             this.HideOptionsDeleteButton = new System.Windows.Forms.Button();
@@ -49,9 +52,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.NextImageDeleteButton = new System.Windows.Forms.Button();
-            this.NextImageButton = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.KeybindsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,6 +156,40 @@
             this.KeybindsGroupBox.TabIndex = 6;
             this.KeybindsGroupBox.TabStop = false;
             this.KeybindsGroupBox.Text = "Key bindings";
+            // 
+            // NextImageDeleteButton
+            // 
+            this.NextImageDeleteButton.Location = new System.Drawing.Point(237, 146);
+            this.NextImageDeleteButton.Name = "NextImageDeleteButton";
+            this.NextImageDeleteButton.Size = new System.Drawing.Size(20, 20);
+            this.NextImageDeleteButton.TabIndex = 20;
+            this.NextImageDeleteButton.Text = "X";
+            this.NextImageDeleteButton.UseVisualStyleBackColor = true;
+            this.NextImageDeleteButton.Click += new System.EventHandler(this.DeleteSettingButton_Click);
+            // 
+            // NextImageButton
+            // 
+            this.NextImageButton.Location = new System.Drawing.Point(164, 146);
+            this.NextImageButton.Margin = new System.Windows.Forms.Padding(2);
+            this.NextImageButton.Name = "NextImageButton";
+            this.NextImageButton.ReadOnly = true;
+            this.NextImageButton.Size = new System.Drawing.Size(68, 20);
+            this.NextImageButton.TabIndex = 19;
+            this.NextImageButton.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NextImageButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeydownSetting);
+            this.NextImageButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ClickedSetting);
+            this.NextImageButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SettingsPreviewKeyDown);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 149);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Next image";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // CloseProgramDeleteButton
             // 
@@ -309,40 +343,6 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // NextImageDeleteButton
-            // 
-            this.NextImageDeleteButton.Location = new System.Drawing.Point(237, 146);
-            this.NextImageDeleteButton.Name = "NextImageDeleteButton";
-            this.NextImageDeleteButton.Size = new System.Drawing.Size(20, 20);
-            this.NextImageDeleteButton.TabIndex = 20;
-            this.NextImageDeleteButton.Text = "X";
-            this.NextImageDeleteButton.UseVisualStyleBackColor = true;
-            this.NextImageDeleteButton.Click += new System.EventHandler(this.DeleteSettingButton_Click);
-            // 
-            // NextImageButton
-            // 
-            this.NextImageButton.Location = new System.Drawing.Point(164, 146);
-            this.NextImageButton.Margin = new System.Windows.Forms.Padding(2);
-            this.NextImageButton.Name = "NextImageButton";
-            this.NextImageButton.ReadOnly = true;
-            this.NextImageButton.Size = new System.Drawing.Size(68, 20);
-            this.NextImageButton.TabIndex = 19;
-            this.NextImageButton.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NextImageButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeydownSetting);
-            this.NextImageButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ClickedSetting);
-            this.NextImageButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SettingsPreviewKeyDown);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(5, 149);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(60, 13);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Next image";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -355,6 +355,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(303, 405);
             this.Name = "SettingsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeydownSetting);
             this.KeybindsGroupBox.ResumeLayout(false);

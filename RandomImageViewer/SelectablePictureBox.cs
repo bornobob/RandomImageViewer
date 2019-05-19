@@ -8,16 +8,13 @@ namespace RandomImageViewer
     public class SelectablePictureBox : PictureBox
     {
         private bool Selected = false;
-        private string Path;
+        private ImageObject _Image;
 
-        public SelectablePictureBox(string path)
+        public SelectablePictureBox(ImageObject image)
         {
             this.SizeMode = PictureBoxSizeMode.Zoom;
-            Path = path;
-            if (File.Exists(path))
-            {
-                SetImage(Image.FromFile(path));
-            }
+            this._Image = image;
+            SetImage();
             base.SizeChanged += new EventHandler(this.SizeChanged);
         }
 
@@ -39,19 +36,9 @@ namespace RandomImageViewer
             pe.Graphics.DrawRectangle(new Pen(color, 4f), new Rectangle(0, 0, this.Width, this.Height));
         }
 
-        private void SetImage(Image img)
+        private void SetImage()
         {
-            decimal Factor;
-            if (img.Width > img.Height)
-            {
-                Factor = (decimal)this.Width / (decimal)img.Width;
-            }
-            else
-            {
-                Factor = (decimal)this.Height / (decimal)img.Height;
-            }
-            Factor *= 2m;
-            Bitmap thumbnail = new Bitmap(img, new Size((int)(img.Width * Factor), (int)(img.Height * Factor)));
+            Bitmap thumbnail = this._Image.GetThumbnail(this.Size);
             this.Image = thumbnail;
         }
 
@@ -62,7 +49,7 @@ namespace RandomImageViewer
 
         public string GetPath()
         {
-            return Path;
+            return Path.Combine(this._Image.GetDirectory(), this._Image.GetFileName());
         }
     }
 }

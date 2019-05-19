@@ -15,56 +15,46 @@ namespace RandomImageViewer
         }
 
         private Mode _Mode;
-        private Bitmap CurrentImage;
-        private decimal ZoomFactor;
-        private List<string> ImagePaths = new List<string>();
-        private static Random rnd = new Random();
+        private decimal ZoomFactor = 1m;
         private List<InputDirControl> InputDirs = new List<InputDirControl>();
-        private int LastIndex = 0;
         private bool InSlideshow = false;
-        private int NumberOfThumbnails = 10;
         private List<SelectablePictureBox> Thumbnails = new List<SelectablePictureBox>();
-        private int SelectedThumbnail = 0;
         private KeybindSettingsData KeybindSettings = new KeybindSettingsData();
         private ContextMenu PictureBoxContextMenu = new ContextMenu();
         private SearchOption ImageLoadingSearchOption;
+        private ImageList ImageList;
 
         public MainForm()
         {
             InitializeComponent();
-            if (Properties.Settings.Default.Location.X != -1 && Properties.Settings.Default.Location.Y != -1)
-            {
-                this.StartPosition = FormStartPosition.Manual;
-            }
-            this.KeyPreview = true;
+            this.ImageList = new ImageList(10);
+            AddMenuItems();
+            LoadSettings();            
+        }
 
+        private void AddMenuItems()
+        {
             var menuItem = new MenuItem("Open image in folder");
             menuItem.Click += new EventHandler(MainPictureBoxContextMenu_ItemClicked);
             PictureBoxContextMenu.MenuItems.Add(menuItem);
-
-            LoadSettings();
         }
 
         private void LoadSettings()
         {
-            if (Properties.Settings.Default.RandomMode)
-            {
-                _Mode = Mode.Random;
-            }
-            else
-            {
-                _Mode = Mode.Sequential;
-            }
-            RadioRandom.Checked = Properties.Settings.Default.RandomMode;
+            _Mode = Properties.Settings.Default.RandomMode ? Mode.Random : Mode.Sequential; // Set mode to random or sequential 
+            RadioRandom.Checked = Properties.Settings.Default.RandomMode; // Set random or sequential radio buttons
             RadioSeq.Checked = !RadioRandom.Checked;
-            decimal value = Properties.Settings.Default.WaitDuration / 1000;
+            TraverseSubdirectoriesCheckBox.Checked = Properties.Settings.Default.SearchOption == SearchOption.AllDirectories; // Set traverse subdirectories
+
+            // Set the slideshow timing
+            decimal value = Properties.Settings.Default.WaitDuration / 1000; 
             if (value < SlideshowTiming.Minimum || value > SlideshowTiming.Maximum)
             {
                 value = 1.5m;
             }
-            ImageLoadingSearchOption = Properties.Settings.Default.SearchOption;
-            TraverseSubdirectoriesCheckBox.Checked = ImageLoadingSearchOption == SearchOption.AllDirectories;
             SlideshowTiming.Value = value;
+
+            // Add saved directories
             if (Properties.Settings.Default.Paths != null)
             {
                 foreach (string s in Properties.Settings.Default.Paths)
@@ -74,12 +64,16 @@ namespace RandomImageViewer
                         AddDirectoryDirect(s);
                     }
                 }
-                LoadImages();
+                ReloadDirectories();
             }
-            if (this.StartPosition == FormStartPosition.Manual)
+
+            // Set window position
+            if (Properties.Settings.Default.Location.X != -1 && Properties.Settings.Default.Location.Y != -1)
             {
+                this.StartPosition = FormStartPosition.Manual;
                 this.Location = Properties.Settings.Default.Location;
             }
+            
             this.WindowState = Properties.Settings.Default.State;
             if (this.WindowState == FormWindowState.Normal) this.Size = Properties.Settings.Default.WindowSize;
         }
@@ -90,6 +84,17 @@ namespace RandomImageViewer
             inputDir.Location = new Point(0, inputDir.Height * InputDirs.Count);
             InputDirsPanel.Controls.Add(inputDir);
             InputDirs.Add(inputDir);
+        }
+
+        private void ReloadDirectories()
+        {
+            List<DirectoryObject> directories = new List<DirectoryObject>();
+            foreach (InputDirControl ic in this.InputDirs)
+            {
+                directories.Add(new DirectoryObject(ic.GetPath(), this.ImageLoadingSearchOption == SearchOption.AllDirectories));
+            }
+            this.ImageList.SetDirectories(directories);
+            NoImagesLabel.Text = this.ImageList.GetTotalImages().ToString();
         }
 
         private void SaveSettings()
@@ -112,31 +117,6 @@ namespace RandomImageViewer
             Properties.Settings.Default.SearchOption = ImageLoadingSearchOption;
         }
 
-        private void LoadImages()
-        {
-            List<string> imgList = new List<string>();
-            foreach (InputDirControl inputDir in InputDirs)
-            {
-                string path = inputDir.GetPath();
-                string[] imgArray = Directory.GetFiles(path, "*", ImageLoadingSearchOption);
-
-                foreach (string s in imgArray)
-                {
-                    if (s.EndsWith(".jpg") || s.EndsWith(".png"))
-                    {
-                        if (!imgList.Contains(s))
-                        {
-                            imgList.Add(s);
-                        }
-                    }
-                }
-            }
-            ImagePaths = new List<string>(imgList);
-            NoImagesLabel.Text = ImagePaths.Count.ToString();
-            LastIndex = 0;
-            SetImage();
-        }
-
         public void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F10)
@@ -154,7 +134,7 @@ namespace RandomImageViewer
                 {
                     MainPictureBox.SizeMode = PictureBoxSizeMode.Normal;
                 }
-                ZoomFactor = 1;
+                ZoomFactor = 1m;
                 SetPictureZoomSize();
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn) || e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomOut))
@@ -232,37 +212,23 @@ namespace RandomImageViewer
 
         private void SetPictureZoomSize()
         {
-            Size s = new Size((int)(CurrentImage.Width * ZoomFactor), (int)(CurrentImage.Height * ZoomFactor));
-            Bitmap img = new Bitmap(CurrentImage, s);
-            MainPictureBox.Image = null;
-            MainPictureBox.Image = img;
-            SetPictureFieldSize();
+            ImageObject img = ImageList.GetCurrentImage();
+            if (img != null)
+            {
+                MainPictureBox.Image = img.GetImage(this.ZoomFactor);
+                SetPictureFieldSize();
+            }
         }
 
         private void SetImage(bool manual = false)
         {
-            if (ImagePaths.Count > 0)
+            ImageObject img = ImageList.GetNextImage(this._Mode == Mode.Random);
+            if (img != null)
             {
-                string path;
-                if (_Mode == Mode.Random)
-                {
-                    int randomIndex = rnd.Next(ImagePaths.Count);
-                    LastIndex = randomIndex;
-                }
-                else
-                {
-                    LastIndex++;
-                    if (LastIndex >= ImagePaths.Count) LastIndex = 0;
-                }
-                path = ImagePaths[LastIndex];
-                CurrentImage = new Bitmap(path);
-                ZoomFactor = 1;
+                ZoomFactor = 1m;
                 SetPictureZoomSize();
-                int lastBackslash = path.LastIndexOf('\\');
-                CurrentImageLabel.Text = path.Substring(lastBackslash + 1, path.Length-lastBackslash-1);
-                CurrentDirLabel.Text = path.Substring(0, lastBackslash);
-                AddHistoryThumbnail(path);
-                this.Text = "Random Image Viewer - " + path;
+                AddHistoryThumbnail(img);
+                SetImageDetailLabels(img);
                 if (manual && InSlideshow)
                 {
                     SlideshowTimer.Enabled = false;
@@ -271,9 +237,16 @@ namespace RandomImageViewer
             }
         }
 
+        private void SetImageDetailLabels(ImageObject image)
+        {
+            CurrentImageLabel.Text = image.GetFileName();
+            CurrentDirLabel.Text = image.GetDirectory();
+            this.Text = "Random Image Viewer - " + image.GetFileName();
+        }
+
         private void frmMain_SizeChanged(object sender, EventArgs e)
         {
-            if (CurrentImage != null)
+            if (this.ImageList.GetCurrentImage() != null)
             {
                 SetPictureZoomSize();
             }
@@ -296,7 +269,7 @@ namespace RandomImageViewer
                     inputDir.Location = new Point(0, inputDir.Height * InputDirs.Count);
                     InputDirsPanel.Controls.Add(inputDir);
                     InputDirs.Add(inputDir);
-                    LoadImages();
+                    ReloadDirectories();
                     break;
             }
             SinkLabel.Focus();
@@ -307,7 +280,7 @@ namespace RandomImageViewer
             directory.Visible = false;
             InputDirs.Remove(directory);
             ResetDirectoryLocations();
-            LoadImages();
+            ReloadDirectories();
         }
 
         private void ResetDirectoryLocations()
@@ -328,7 +301,7 @@ namespace RandomImageViewer
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (CurrentImage != null)
+                if (this.ImageList.GetCurrentImage() != null)
                 {
                     PictureBoxContextMenu.Show(MainPictureBox, e.Location);
                 }
@@ -337,7 +310,7 @@ namespace RandomImageViewer
 
         private void ButtonReload_Click(object sender, EventArgs e)
         {
-            LoadImages();
+            ReloadDirectories();
             SinkLabel.Focus();
         }
 
@@ -382,9 +355,9 @@ namespace RandomImageViewer
             SinkLabel.Focus();
         }
 
-        private void AddHistoryThumbnail(string path)
+        private void AddHistoryThumbnail(ImageObject image)
         {
-            SelectablePictureBox pictureBox = new SelectablePictureBox(path)
+            SelectablePictureBox pictureBox = new SelectablePictureBox(image)
             {
                 Width = HistoryPanel.Width / 10,
                 Height = HistoryPanel.Height
@@ -394,11 +367,11 @@ namespace RandomImageViewer
             pictureBox.MouseClick += new MouseEventHandler(HistoryPanel_MouseDown);
             HistoryPanel.Controls.Add(pictureBox);
             Thumbnails.Insert(0, pictureBox);
-            SelectedThumbnail = 0;
-            while (Thumbnails.Count > NumberOfThumbnails)
+            
+            if (Thumbnails.Count > 10)
             {
                 SelectablePictureBox thumbnail = Thumbnails[Thumbnails.Count - 1];
-                HistoryPanel.Controls.Remove(thumbnail);                
+                HistoryPanel.Controls.Remove(thumbnail);
                 thumbnail.Dispose();
                 Thumbnails.RemoveAt(Thumbnails.Count - 1);
             }
@@ -415,7 +388,7 @@ namespace RandomImageViewer
 
         private void ResizeThumbnails()
         {
-            int width = HistoryPanel.Width / NumberOfThumbnails;
+            int width = HistoryPanel.Width / 10;
             foreach (Control c in HistoryPanel.Controls)
             {
                 c.Width = width;
@@ -430,19 +403,14 @@ namespace RandomImageViewer
 
         private void SelectThumbnail(SelectablePictureBox selected)
         {
-            if (Thumbnails.IndexOf(selected) != SelectedThumbnail)
+            if (Thumbnails.IndexOf(selected) != this.ImageList.GetSelectedHistoryIndex())
             {
                 DeselectThumbnails();
                 selected.SetSelected(true);
-                string path = selected.GetPath();
-                CurrentImage = new Bitmap(path);
-                int lastBackslash = path.LastIndexOf('\\');
-                CurrentImageLabel.Text = path.Substring(lastBackslash + 1, path.Length - lastBackslash - 1);
-                CurrentDirLabel.Text = path.Substring(0, lastBackslash);
-                ZoomFactor = 1;
-                this.Text = "Random Image Viewer - " + path;
+                ImageList.SelectHistoryImage(Thumbnails.IndexOf(selected));
+                ZoomFactor = 1m;
+                SetImageDetailLabels(this.ImageList.GetCurrentImage());
                 SetPictureZoomSize();
-                SelectedThumbnail = Thumbnails.IndexOf(selected);
             }
         }
 
@@ -453,22 +421,16 @@ namespace RandomImageViewer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            (new SettingsForm()
-            {
-                StartPosition = FormStartPosition.CenterParent
-            }).ShowDialog();
+            (new SettingsForm()).ShowDialog();
             SinkLabel.Focus();
             KeybindSettings.LoadSettings();
         }
 
         private void MainPictureBoxContextMenu_ItemClicked(object sender, EventArgs e)
         {
-            if (LastIndex < ImagePaths.Count)
-            {
-                string path = ImagePaths[LastIndex];
-                string arg = "/select, \"" + path.Replace('/', '\\') + "\"";
-                System.Diagnostics.Process.Start("explorer.exe", arg);
-            }
+            string path = Path.Combine(ImageList.GetCurrentImage().GetDirectory(), ImageList.GetCurrentImage().GetFileName());
+            string arg = "/select, \"" + path.Replace('/', '\\') + "\"";
+            System.Diagnostics.Process.Start("explorer.exe", arg);
         }
 
         private void TraverseSubdirectoriesCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -481,7 +443,7 @@ namespace RandomImageViewer
             {
                 ImageLoadingSearchOption = SearchOption.TopDirectoryOnly;
             }
-            LoadImages();
+            ReloadDirectories();
         }
     }
 }
