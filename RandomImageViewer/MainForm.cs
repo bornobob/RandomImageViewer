@@ -29,7 +29,8 @@ namespace RandomImageViewer
             InitializeComponent();
             this.ImageList = new ImageList(10);
             AddMenuItems();
-            LoadSettings();            
+            LoadSettings();
+            SetImage();
         }
 
         private void AddMenuItems()
