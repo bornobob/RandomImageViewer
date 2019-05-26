@@ -31,9 +31,7 @@ namespace RandomImageViewer
             {
                 this.Type = ImageType.Image;
             }
-            else if (
-              this.Path.EndsWith(".gif")
-              )
+            else if (this.Path.EndsWith(".gif"))
             {
                 this.Type = ImageType.Gif;
             }
@@ -94,6 +92,11 @@ namespace RandomImageViewer
         public string GetPath()
         {
             return Path;  
+        }
+
+        public ImageType GetImageType()
+        {
+            return Type;
         }
     }
 }

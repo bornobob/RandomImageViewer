@@ -168,7 +168,7 @@ namespace RandomImageViewer
 
         private void Zoom(Keys keyCode)
         {
-            if (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
+            if (ImageList.GetCurrentImage() != null && ImageList.GetCurrentImage().CanZoom() && MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
             {
                 if (keyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn))
                 {
@@ -246,7 +246,13 @@ namespace RandomImageViewer
             ImageObject img = ImageList.GetCurrentImage();
             if (img != null)
             {
-                MainPictureBox.Image = img.GetImage(this.ZoomFactor);
+                if (img.CanZoom())
+                {
+                    MainPictureBox.Image = img.GetImage(this.ZoomFactor);
+                } else
+                {
+                    MainPictureBox.ImageLocation = img.GetPath();
+                }
                 SetPictureFieldSize();
             }
         }
