@@ -5,23 +5,21 @@ namespace RandomImageViewer
 {
     public partial class InputDirControl : UserControl
     {
-        private MainForm MainForm;
-
-        public InputDirControl(MainForm main, string path)
+        public InputDirControl(string path)
         {
             InitializeComponent();
-            MainForm = main;
             PathTextbox.Text = path;
-        }
-
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
-            MainForm.DeleteDirectory(this);
         }
 
         public string GetPath()
         {
             return PathTextbox.Text;
+        }
+
+        public delegate void DeleteInputDir(InputDirControl inputDirControl);
+        public void AddHandler(DeleteInputDir func)
+        {
+            DeleteButton.Click += (s, e) => { func(this); };
         }
     }
 }

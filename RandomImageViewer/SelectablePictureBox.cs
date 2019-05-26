@@ -27,12 +27,7 @@ namespace RandomImageViewer
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
-
-            var color = Color.LightGray;
-            if (Selected)
-            {
-                color = Color.Red;
-            }
+            var color = Selected ? Color.Red : Color.LightGray;
             pe.Graphics.DrawRectangle(new Pen(color, 4f), new Rectangle(0, 0, this.Width, this.Height));
         }
 
@@ -45,11 +40,6 @@ namespace RandomImageViewer
         private new void SizeChanged(object sender, EventArgs e)
         {
             this.Invalidate();
-        }
-
-        public string GetPath()
-        {
-            return Path.Combine(this._Image.GetDirectory(), this._Image.GetFileName());
         }
 
         public bool GetSelected()

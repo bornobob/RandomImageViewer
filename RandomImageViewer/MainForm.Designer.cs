@@ -42,7 +42,7 @@
             this.ButtonAddDir = new System.Windows.Forms.Button();
             this.SinkLabel = new System.Windows.Forms.Label();
             this.OptionsPanel = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.OptionsButton = new System.Windows.Forms.Button();
             this.SlideshowButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -200,7 +200,7 @@
             // 
             this.OptionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OptionsPanel.Controls.Add(this.button1);
+            this.OptionsPanel.Controls.Add(this.OptionsButton);
             this.OptionsPanel.Controls.Add(this.SlideshowButton);
             this.OptionsPanel.Controls.Add(this.groupBox2);
             this.OptionsPanel.Controls.Add(this.ButtonReload);
@@ -212,16 +212,16 @@
             this.OptionsPanel.Size = new System.Drawing.Size(200, 473);
             this.OptionsPanel.TabIndex = 8;
             // 
-            // button1
+            // OptionsButton
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(115, 320);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Options";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.OptionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.OptionsButton.Location = new System.Drawing.Point(115, 320);
+            this.OptionsButton.Name = "OptionsButton";
+            this.OptionsButton.Size = new System.Drawing.Size(75, 23);
+            this.OptionsButton.TabIndex = 15;
+            this.OptionsButton.Text = "Options";
+            this.OptionsButton.UseVisualStyleBackColor = true;
+            this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
             // 
             // SlideshowButton
             // 
@@ -382,7 +382,7 @@
         private System.Windows.Forms.Label NoImagesLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel HistoryPanel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button OptionsButton;
         private System.Windows.Forms.CheckBox TraverseSubdirectoriesCheckBox;
     }
 }

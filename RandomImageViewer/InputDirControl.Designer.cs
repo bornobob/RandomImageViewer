@@ -40,7 +40,6 @@
             this.DeleteButton.TabIndex = 0;
             this.DeleteButton.Text = "X";
             this.DeleteButton.UseVisualStyleBackColor = true;
-            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // PathTextbox
             // 

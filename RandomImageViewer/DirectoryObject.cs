@@ -2,7 +2,7 @@
 
 namespace RandomImageViewer
 {
-    class DirectoryObject
+    public class DirectoryObject
     {
         private string Path;
         private SearchOption TraverseSubdirectories;

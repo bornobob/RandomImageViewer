@@ -4,7 +4,7 @@ using System.IO;
 
 namespace RandomImageViewer
 {
-    class ImageList
+    public class ImageList
     {
         private List<DirectoryObject> Directories;
         private List<ImageObject> Images;

@@ -65,7 +65,7 @@ namespace RandomImageViewer
             {
                 sizeFactor = (decimal)size.Height / (decimal)original.Height;
             }
-            sizeFactor *= 2m; // In case the user later increases the window size
+            sizeFactor *= 2m;
             Bitmap thumbnail = new Bitmap(original, new Size((int)(original.Width * sizeFactor), (int)(original.Height * sizeFactor)));
             original.Dispose();
             return thumbnail;
@@ -89,6 +89,11 @@ namespace RandomImageViewer
         public string GetDirectory()
         {
             return System.IO.Path.GetDirectoryName(this.Path);
+        }
+
+        public string GetPath()
+        {
+            return Path;  
         }
     }
 }
