@@ -43,7 +43,6 @@
             this.SinkLabel = new System.Windows.Forms.Label();
             this.OptionsPanel = new System.Windows.Forms.Panel();
             this.OptionsButton = new System.Windows.Forms.Button();
-            this.SlideshowButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.CurrentDirLabel = new System.Windows.Forms.Label();
@@ -54,6 +53,7 @@
             this.ButtonReload = new System.Windows.Forms.Button();
             this.SlideshowTimer = new System.Windows.Forms.Timer(this.components);
             this.HistoryPanel = new System.Windows.Forms.Panel();
+            this.SlideshowButton = new RandomImageViewer.TimerButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -200,8 +200,8 @@
             // 
             this.OptionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OptionsPanel.Controls.Add(this.OptionsButton);
             this.OptionsPanel.Controls.Add(this.SlideshowButton);
+            this.OptionsPanel.Controls.Add(this.OptionsButton);
             this.OptionsPanel.Controls.Add(this.groupBox2);
             this.OptionsPanel.Controls.Add(this.ButtonReload);
             this.OptionsPanel.Controls.Add(this.groupBox1);
@@ -222,16 +222,6 @@
             this.OptionsButton.Text = "Options";
             this.OptionsButton.UseVisualStyleBackColor = true;
             this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
-            // 
-            // SlideshowButton
-            // 
-            this.SlideshowButton.Location = new System.Drawing.Point(7, 238);
-            this.SlideshowButton.Name = "SlideshowButton";
-            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
-            this.SlideshowButton.TabIndex = 14;
-            this.SlideshowButton.Text = "Begin Slideshow";
-            this.SlideshowButton.UseVisualStyleBackColor = true;
-            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
             // 
             // groupBox2
             // 
@@ -326,6 +316,16 @@
             this.HistoryPanel.Size = new System.Drawing.Size(677, 111);
             this.HistoryPanel.TabIndex = 9;
             // 
+            // SlideshowButton
+            // 
+            this.SlideshowButton.Location = new System.Drawing.Point(7, 238);
+            this.SlideshowButton.Name = "SlideshowButton";
+            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
+            this.SlideshowButton.TabIndex = 16;
+            this.SlideshowButton.Text = "Begin Slideshow";
+            this.SlideshowButton.UseVisualStyleBackColor = true;
+            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,7 +373,6 @@
         private System.Windows.Forms.Timer SlideshowTimer;
         private System.Windows.Forms.NumericUpDown SlideshowTiming;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button SlideshowButton;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label CurrentDirLabel;
@@ -384,6 +383,7 @@
         private System.Windows.Forms.Panel HistoryPanel;
         private System.Windows.Forms.Button OptionsButton;
         private System.Windows.Forms.CheckBox TraverseSubdirectoriesCheckBox;
+        private TimerButton SlideshowButton;
     }
 }
 

@@ -232,6 +232,7 @@ namespace RandomImageViewer
             {
                 SlideshowTimer.Enabled = false;
                 SlideshowTimer.Enabled = true;
+                SlideshowButton.ResetTimer();
             }
         }
 
@@ -365,13 +366,15 @@ namespace RandomImageViewer
         private void SlideshowTimer_Tick(object sender, EventArgs e)
         {
             SetImage();
+            SlideshowButton.ResetTimer();
         }
 
         private void SlideshowButton_Click(object sender, EventArgs e)
         {
             InSlideshow = !InSlideshow;
-            SlideshowTimer.Enabled = InSlideshow;
             SlideshowTimer.Interval = (int)(SlideshowTiming.Value * 1000);
+            SlideshowButton.SetEnabled(InSlideshow, SlideshowTimer.Interval);
+            SlideshowTimer.Enabled = InSlideshow;
             SlideshowButton.Text = InSlideshow ? "End Slideshow" : "Begin Slideshow";
             SinkLabel.Focus();
         }
