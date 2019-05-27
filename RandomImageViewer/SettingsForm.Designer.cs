@@ -35,6 +35,12 @@
             this.ZoomOutButton = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.KeybindsGroupBox = new System.Windows.Forms.GroupBox();
+            this.ToggleSlideshowDeleteButton = new System.Windows.Forms.Button();
+            this.ToggleSlideshowButton = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.PrevImageDeleteButton = new System.Windows.Forms.Button();
+            this.PrevImageButton = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.NextImageDeleteButton = new System.Windows.Forms.Button();
             this.NextImageButton = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,9 +58,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.PrevImageDeleteButton = new System.Windows.Forms.Button();
-            this.PrevImageButton = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.KeybindsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -132,6 +135,9 @@
             // 
             // KeybindsGroupBox
             // 
+            this.KeybindsGroupBox.Controls.Add(this.ToggleSlideshowDeleteButton);
+            this.KeybindsGroupBox.Controls.Add(this.ToggleSlideshowButton);
+            this.KeybindsGroupBox.Controls.Add(this.label9);
             this.KeybindsGroupBox.Controls.Add(this.PrevImageDeleteButton);
             this.KeybindsGroupBox.Controls.Add(this.PrevImageButton);
             this.KeybindsGroupBox.Controls.Add(this.label8);
@@ -158,10 +164,78 @@
             this.KeybindsGroupBox.Controls.Add(this.ZoomInButton);
             this.KeybindsGroupBox.Location = new System.Drawing.Point(12, 12);
             this.KeybindsGroupBox.Name = "KeybindsGroupBox";
-            this.KeybindsGroupBox.Size = new System.Drawing.Size(262, 196);
+            this.KeybindsGroupBox.Size = new System.Drawing.Size(262, 219);
             this.KeybindsGroupBox.TabIndex = 6;
             this.KeybindsGroupBox.TabStop = false;
             this.KeybindsGroupBox.Text = "Key bindings";
+            // 
+            // ToggleSlideshowDeleteButton
+            // 
+            this.ToggleSlideshowDeleteButton.Location = new System.Drawing.Point(237, 190);
+            this.ToggleSlideshowDeleteButton.Name = "ToggleSlideshowDeleteButton";
+            this.ToggleSlideshowDeleteButton.Size = new System.Drawing.Size(20, 20);
+            this.ToggleSlideshowDeleteButton.TabIndex = 26;
+            this.ToggleSlideshowDeleteButton.Text = "X";
+            this.ToggleSlideshowDeleteButton.UseVisualStyleBackColor = true;
+            this.ToggleSlideshowDeleteButton.Click += new System.EventHandler(this.DeleteSettingButton_Click);
+            // 
+            // ToggleSlideshowButton
+            // 
+            this.ToggleSlideshowButton.Location = new System.Drawing.Point(164, 190);
+            this.ToggleSlideshowButton.Margin = new System.Windows.Forms.Padding(2);
+            this.ToggleSlideshowButton.Name = "ToggleSlideshowButton";
+            this.ToggleSlideshowButton.ReadOnly = true;
+            this.ToggleSlideshowButton.Size = new System.Drawing.Size(68, 20);
+            this.ToggleSlideshowButton.TabIndex = 25;
+            this.ToggleSlideshowButton.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ToggleSlideshowButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeydownSetting);
+            this.ToggleSlideshowButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ClickedSetting);
+            this.ToggleSlideshowButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SettingsPreviewKeyDown);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(5, 193);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(89, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "Toggle slideshow";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // PrevImageDeleteButton
+            // 
+            this.PrevImageDeleteButton.Location = new System.Drawing.Point(237, 168);
+            this.PrevImageDeleteButton.Name = "PrevImageDeleteButton";
+            this.PrevImageDeleteButton.Size = new System.Drawing.Size(20, 20);
+            this.PrevImageDeleteButton.TabIndex = 23;
+            this.PrevImageDeleteButton.Text = "X";
+            this.PrevImageDeleteButton.UseVisualStyleBackColor = true;
+            this.PrevImageDeleteButton.Click += new System.EventHandler(this.DeleteSettingButton_Click);
+            // 
+            // PrevImageButton
+            // 
+            this.PrevImageButton.Location = new System.Drawing.Point(164, 168);
+            this.PrevImageButton.Margin = new System.Windows.Forms.Padding(2);
+            this.PrevImageButton.Name = "PrevImageButton";
+            this.PrevImageButton.ReadOnly = true;
+            this.PrevImageButton.Size = new System.Drawing.Size(68, 20);
+            this.PrevImageButton.TabIndex = 22;
+            this.PrevImageButton.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PrevImageButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeydownSetting);
+            this.PrevImageButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ClickedSetting);
+            this.PrevImageButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SettingsPreviewKeyDown);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 171);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 13);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "Previous image";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // NextImageDeleteButton
             // 
@@ -349,39 +423,6 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // PrevImageDeleteButton
-            // 
-            this.PrevImageDeleteButton.Location = new System.Drawing.Point(237, 168);
-            this.PrevImageDeleteButton.Name = "PrevImageDeleteButton";
-            this.PrevImageDeleteButton.Size = new System.Drawing.Size(20, 20);
-            this.PrevImageDeleteButton.TabIndex = 23;
-            this.PrevImageDeleteButton.Text = "X";
-            this.PrevImageDeleteButton.UseVisualStyleBackColor = true;
-            // 
-            // PrevImageButton
-            // 
-            this.PrevImageButton.Location = new System.Drawing.Point(164, 168);
-            this.PrevImageButton.Margin = new System.Windows.Forms.Padding(2);
-            this.PrevImageButton.Name = "PrevImageButton";
-            this.PrevImageButton.ReadOnly = true;
-            this.PrevImageButton.Size = new System.Drawing.Size(68, 20);
-            this.PrevImageButton.TabIndex = 22;
-            this.PrevImageButton.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.PrevImageButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeydownSetting);
-            this.PrevImageButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ClickedSetting);
-            this.PrevImageButton.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SettingsPreviewKeyDown);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(5, 171);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(79, 13);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "Previous image";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,5 +473,8 @@
         private System.Windows.Forms.Button PrevImageDeleteButton;
         private System.Windows.Forms.TextBox PrevImageButton;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button ToggleSlideshowDeleteButton;
+        private System.Windows.Forms.TextBox ToggleSlideshowButton;
+        private System.Windows.Forms.Label label9;
     }
 }

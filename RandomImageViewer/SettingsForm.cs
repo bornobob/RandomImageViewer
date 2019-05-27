@@ -20,6 +20,7 @@ namespace RandomImageViewer
             CloseProgramButton.Tag = CloseProgramDeleteButton.Tag = KeybindSettings.QuitProgram;
             NextImageButton.Tag = NextImageDeleteButton.Tag = KeybindSettings.NextImage;
             PrevImageButton.Tag = PrevImageDeleteButton.Tag = KeybindSettings.PrevImage;
+            ToggleSlideshowButton.Tag = ToggleSlideshowDeleteButton.Tag = KeybindSettings.ToggleSlideshow;
 
             SettingsData = new KeybindSettingsData();
             LoadTextboxes();
@@ -91,6 +92,8 @@ namespace RandomImageViewer
                     return ZoomOutButton;
                 case KeybindSettings.PrevImage:
                     return PrevImageButton;
+                case KeybindSettings.ToggleSlideshow:
+                    return ToggleSlideshowButton;
                 default:
                     return null;
             }

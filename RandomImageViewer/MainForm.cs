@@ -156,6 +156,9 @@ namespace RandomImageViewer
             } else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.PrevImage))
             {
                 PreviousImage();
+            } else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleSlideshow))
+            {
+                SlideshowButton_Click(this, null);
             }
         }
 

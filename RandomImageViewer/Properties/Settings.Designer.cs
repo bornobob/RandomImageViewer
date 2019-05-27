@@ -201,5 +201,17 @@ namespace RandomImageViewer.Properties {
                 this["PrevImage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int ToggleSlideshow {
+            get {
+                return ((int)(this["ToggleSlideshow"]));
+            }
+            set {
+                this["ToggleSlideshow"] = value;
+            }
+        }
     }
 }
