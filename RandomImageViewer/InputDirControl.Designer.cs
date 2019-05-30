@@ -43,11 +43,12 @@
             // 
             // PathTextbox
             // 
-            this.PathTextbox.Enabled = false;
             this.PathTextbox.Location = new System.Drawing.Point(2, 2);
             this.PathTextbox.Name = "PathTextbox";
+            this.PathTextbox.ReadOnly = true;
             this.PathTextbox.Size = new System.Drawing.Size(159, 20);
             this.PathTextbox.TabIndex = 1;
+            this.PathTextbox.MouseHover += new System.EventHandler(this.PathTextbox_MouseHover);
             // 
             // InputDirControl
             // 

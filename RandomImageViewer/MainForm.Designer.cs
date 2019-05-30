@@ -42,8 +42,9 @@
             this.ButtonAddDir = new System.Windows.Forms.Button();
             this.SinkLabel = new System.Windows.Forms.Label();
             this.OptionsPanel = new System.Windows.Forms.Panel();
+            this.SlideshowButton = new RandomImageViewer.TimerButton();
             this.OptionsButton = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.InfoGroupBox = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.CurrentDirLabel = new System.Windows.Forms.Label();
             this.CurrentImageLabel = new System.Windows.Forms.Label();
@@ -53,13 +54,12 @@
             this.ButtonReload = new System.Windows.Forms.Button();
             this.SlideshowTimer = new System.Windows.Forms.Timer(this.components);
             this.HistoryPanel = new System.Windows.Forms.Panel();
-            this.SlideshowButton = new RandomImageViewer.TimerButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SlideshowTiming)).BeginInit();
             this.OptionsPanel.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.InfoGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainPictureBox
@@ -202,7 +202,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.OptionsPanel.Controls.Add(this.SlideshowButton);
             this.OptionsPanel.Controls.Add(this.OptionsButton);
-            this.OptionsPanel.Controls.Add(this.groupBox2);
+            this.OptionsPanel.Controls.Add(this.InfoGroupBox);
             this.OptionsPanel.Controls.Add(this.ButtonReload);
             this.OptionsPanel.Controls.Add(this.groupBox1);
             this.OptionsPanel.Controls.Add(this.InputDirsPanel);
@@ -211,6 +211,16 @@
             this.OptionsPanel.Name = "OptionsPanel";
             this.OptionsPanel.Size = new System.Drawing.Size(200, 473);
             this.OptionsPanel.TabIndex = 8;
+            // 
+            // SlideshowButton
+            // 
+            this.SlideshowButton.Location = new System.Drawing.Point(7, 238);
+            this.SlideshowButton.Name = "SlideshowButton";
+            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
+            this.SlideshowButton.TabIndex = 16;
+            this.SlideshowButton.Text = "Begin Slideshow";
+            this.SlideshowButton.UseVisualStyleBackColor = true;
+            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
             // 
             // OptionsButton
             // 
@@ -223,21 +233,21 @@
             this.OptionsButton.UseVisualStyleBackColor = true;
             this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
             // 
-            // groupBox2
+            // InfoGroupBox
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.CurrentDirLabel);
-            this.groupBox2.Controls.Add(this.CurrentImageLabel);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.NoImagesLabel);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(3, 349);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(194, 121);
-            this.groupBox2.TabIndex = 13;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Info";
+            this.InfoGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.InfoGroupBox.Controls.Add(this.label3);
+            this.InfoGroupBox.Controls.Add(this.CurrentDirLabel);
+            this.InfoGroupBox.Controls.Add(this.CurrentImageLabel);
+            this.InfoGroupBox.Controls.Add(this.label2);
+            this.InfoGroupBox.Controls.Add(this.NoImagesLabel);
+            this.InfoGroupBox.Controls.Add(this.label1);
+            this.InfoGroupBox.Location = new System.Drawing.Point(3, 349);
+            this.InfoGroupBox.Name = "InfoGroupBox";
+            this.InfoGroupBox.Size = new System.Drawing.Size(194, 121);
+            this.InfoGroupBox.TabIndex = 13;
+            this.InfoGroupBox.TabStop = false;
+            this.InfoGroupBox.Text = "Info";
             // 
             // label3
             // 
@@ -316,16 +326,6 @@
             this.HistoryPanel.Size = new System.Drawing.Size(677, 111);
             this.HistoryPanel.TabIndex = 9;
             // 
-            // SlideshowButton
-            // 
-            this.SlideshowButton.Location = new System.Drawing.Point(7, 238);
-            this.SlideshowButton.Name = "SlideshowButton";
-            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
-            this.SlideshowButton.TabIndex = 16;
-            this.SlideshowButton.Text = "Begin Slideshow";
-            this.SlideshowButton.UseVisualStyleBackColor = true;
-            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,8 +351,8 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SlideshowTiming)).EndInit();
             this.OptionsPanel.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.InfoGroupBox.ResumeLayout(false);
+            this.InfoGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,7 +373,7 @@
         private System.Windows.Forms.Timer SlideshowTimer;
         private System.Windows.Forms.NumericUpDown SlideshowTiming;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox InfoGroupBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label CurrentDirLabel;
         private System.Windows.Forms.Label CurrentImageLabel;
