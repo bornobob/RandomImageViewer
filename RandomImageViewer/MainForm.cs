@@ -263,6 +263,10 @@ namespace RandomImageViewer
             ImageObject img = ImageList.GetCurrentImage();
             if (img != null)
             {
+                if (MainPictureBox.Image != null)
+                {
+                    MainPictureBox.Image.Dispose();
+                }
                 if (img.CanZoom())
                 {
                     MainPictureBox.Image = img.GetImage(this.ZoomFactor);
