@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace RandomImageViewer
 {
@@ -13,8 +14,10 @@ namespace RandomImageViewer
         private int HistoryIndex;
         private int NrHistory;
         private ImageObject[] HistoryImages;
+        private ContentChangedDelegate ContentChanged;
 
-        public ImageList(int nrHistory = 10)
+        public delegate void ContentChangedDelegate();
+        public ImageList(ContentChangedDelegate contentChanged, int nrHistory = 10)
         {
             this.Directories = new List<DirectoryObject>();
             this.Images = new List<ImageObject>();
@@ -23,32 +26,43 @@ namespace RandomImageViewer
             this.HistoryIndex = 0;
             this.NrHistory = nrHistory;
             this.HistoryImages = new ImageObject[nrHistory];
+            this.ContentChanged = contentChanged;
         }
 
         private void IndexImages()
         {
+            Cursor.Current = Cursors.WaitCursor;
+            Application.DoEvents();
+
             this.Images.Clear();
             this.CurrentIndex = this.HistoryIndex = 0;
 
             HashSet<string> addedPaths = new HashSet<string>();
             foreach (DirectoryObject directory in this.Directories)
             {
-                string path = directory.GetPath();
-                string[] pathsArray = Directory.GetFiles(path, "*", directory.GetSearchOption());
-
-                foreach (string p in pathsArray)
+                if (directory.IsEnabled())
                 {
-                    if (!addedPaths.Contains(p))
+                    string path = directory.GetPath();
+                    string[] pathsArray = Directory.GetFiles(path, "*", directory.GetSearchOption());
+
+                    foreach (string p in pathsArray)
                     {
-                        ImageObject temp = new ImageObject(p);
-                        if (temp.ValidImage())
+                        if (!addedPaths.Contains(p))
                         {
-                            addedPaths.Add(p);
-                            this.Images.Add(temp);
+                            ImageObject temp = new ImageObject(p);
+                            if (temp.ValidImage())
+                            {
+                                addedPaths.Add(p);
+                                this.Images.Add(temp);
+                            }
                         }
                     }
                 }
             }
+
+            Cursor.Current = Cursors.Default;
+
+            ContentChanged();
         }
 
         public ImageObject GetCurrentImage()
@@ -104,6 +118,33 @@ namespace RandomImageViewer
             {
                 this.HistoryIndex += 1;
             }
+        }
+
+        public void DeleteDirectory(DirectoryObject directory)
+        {
+            this.Directories.Remove(directory);
+            IndexImages();
+        }
+
+        public void AddDirectory(DirectoryObject directory)
+        {
+            if (!this.Directories.Contains(directory))
+            {
+                this.Directories.Add(directory);
+                IndexImages();
+            }
+        }
+
+        public void DirectoryChanged(DirectoryObject oldObject, DirectoryObject newObject)
+        {
+            this.Directories.Remove(oldObject);
+            this.Directories.Add(newObject);
+            IndexImages();
+        }
+
+        public void ReIndex()
+        {
+            IndexImages();
         }
     }
 }

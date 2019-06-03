@@ -169,17 +169,20 @@
             // 
             // InputDirsPanel
             // 
-            this.InputDirsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.InputDirsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.InputDirsPanel.AutoScroll = true;
             this.InputDirsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.InputDirsPanel.Location = new System.Drawing.Point(7, 109);
             this.InputDirsPanel.Name = "InputDirsPanel";
             this.InputDirsPanel.Size = new System.Drawing.Size(190, 94);
             this.InputDirsPanel.TabIndex = 3;
+            this.InputDirsPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.InputDirsPanel_ControlChanged);
+            this.InputDirsPanel.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.InputDirsPanel_ControlChanged);
             // 
             // ButtonAddDir
             // 
-            this.ButtonAddDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ButtonAddDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonAddDir.Location = new System.Drawing.Point(122, 209);
             this.ButtonAddDir.Name = "ButtonAddDir";
             this.ButtonAddDir.Size = new System.Drawing.Size(75, 23);
@@ -214,6 +217,7 @@
             // 
             // SlideshowButton
             // 
+            this.SlideshowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SlideshowButton.Location = new System.Drawing.Point(7, 238);
             this.SlideshowButton.Name = "SlideshowButton";
             this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
@@ -305,6 +309,7 @@
             // 
             // ButtonReload
             // 
+            this.ButtonReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonReload.Location = new System.Drawing.Point(7, 209);
             this.ButtonReload.Name = "ButtonReload";
             this.ButtonReload.Size = new System.Drawing.Size(75, 23);

@@ -16,7 +16,6 @@ namespace RandomImageViewer
 
         private Mode _Mode;
         private decimal ZoomFactor = 1m;
-        private List<InputDirControl> InputDirs = new List<InputDirControl>();
         private bool InSlideshow = false;
         private Thumbnails Thumbnails;
         private KeybindSettingsData KeybindSettings = new KeybindSettingsData();
@@ -27,7 +26,7 @@ namespace RandomImageViewer
         public MainForm()
         {
             InitializeComponent();
-            this.ImageList = new ImageList(10);
+            this.ImageList = new ImageList(NrImagesChanged, 10);
             this.Thumbnails = new Thumbnails(ImageList, ThumbnailSelected);
             HistoryPanel.Controls.Add(Thumbnails);
             Thumbnails.Dock = DockStyle.Fill;
@@ -68,7 +67,6 @@ namespace RandomImageViewer
                         AddDirectoryDirect(s);
                     }
                 }
-                ReloadDirectories();
             }
 
             // Set window position
@@ -85,30 +83,17 @@ namespace RandomImageViewer
 
         private void AddDirectoryDirect(string path)
         {
-            var inputDir = new InputDirControl(path);
-            inputDir.AddHandler(DeleteDirectory);
-            inputDir.Location = new Point(0, inputDir.Height * InputDirs.Count);
+            var inputDir = new InputDirControl(path, this.ImageList);
             InputDirsPanel.Controls.Add(inputDir);
-            InputDirs.Add(inputDir);
         }
 
-        private void ReloadDirectories()
-        {
-            List<DirectoryObject> directories = new List<DirectoryObject>();
-            foreach (InputDirControl ic in this.InputDirs)
-            {
-                directories.Add(new DirectoryObject(ic.GetPath(), this.ImageLoadingSearchOption == SearchOption.AllDirectories));
-            }
-            this.ImageList.SetDirectories(directories);
-            NoImagesLabel.Text = this.ImageList.GetTotalImages().ToString();
-        }
 
         private void SaveSettings()
         {
             Properties.Settings.Default.RandomMode = RadioRandom.Checked;
             Properties.Settings.Default.Paths = new System.Collections.Specialized.StringCollection();
             Properties.Settings.Default.WaitDuration = (int)(SlideshowTiming.Value * 1000);
-            foreach (InputDirControl inputDir in InputDirs)
+            foreach (InputDirControl inputDir in this.InputDirsPanel.Controls)
             {
                 Properties.Settings.Default.Paths.Add(inputDir.GetPath());
             }
@@ -309,28 +294,16 @@ namespace RandomImageViewer
             AddDirectoryForm AddDirDialog = new AddDirectoryForm();
             if (AddDirDialog.ShowDialog(this) == DialogResult.OK)
             {
-                var inputDir = new InputDirControl(AddDirDialog.GetPath());
-                inputDir.AddHandler(DeleteDirectory);
-                inputDir.Location = new Point(0, inputDir.Height * InputDirs.Count);
+                var inputDir = new InputDirControl(AddDirDialog.GetPath(), this.ImageList);
                 InputDirsPanel.Controls.Add(inputDir);
-                InputDirs.Add(inputDir);
-                ReloadDirectories();
             }
             SinkLabel.Focus();
-        }
-        
-        public void DeleteDirectory(InputDirControl inputDir)
-        {
-            inputDir.Visible = false;
-            InputDirs.Remove(inputDir);
-            ResetDirectoryLocations();
-            ReloadDirectories();
         }
 
         private void ResetDirectoryLocations()
         {
             var counter = 0;
-            foreach (InputDirControl inputDir in InputDirs)
+            foreach (Control inputDir in InputDirsPanel.Controls)
             {
                 inputDir.Location = new Point(0, inputDir.Height * counter);
                 counter++;
@@ -351,7 +324,7 @@ namespace RandomImageViewer
 
         private void ButtonReload_Click(object sender, EventArgs e)
         {
-            ReloadDirectories();
+            ImageList.ReIndex();
             SinkLabel.Focus();
         }
 
@@ -399,7 +372,6 @@ namespace RandomImageViewer
         private void TraverseSubdirectoriesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ImageLoadingSearchOption = (TraverseSubdirectoriesCheckBox.Checked) ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-            ReloadDirectories();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -420,6 +392,16 @@ namespace RandomImageViewer
             ZoomFactor = 1m;
             SetImageDetailLabels(this.ImageList.GetCurrentImage());
             SetPictureZoomSize();
+        }
+
+        private void InputDirsPanel_ControlChanged(object sender, ControlEventArgs e)
+        {
+            ResetDirectoryLocations();
+        }
+
+        private void NrImagesChanged()
+        {
+            NoImagesLabel.Text = ImageList.GetTotalImages().ToString();
         }
     }
 }

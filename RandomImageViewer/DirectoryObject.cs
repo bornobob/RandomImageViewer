@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace RandomImageViewer
 {
@@ -6,10 +7,12 @@ namespace RandomImageViewer
     {
         private string Path;
         private SearchOption TraverseSubdirectories;
+        private bool Enabled;
 
-        public DirectoryObject(string path, bool traverseSubdirectories)
+        public DirectoryObject(string path, bool traverseSubdirectories, bool enabled)
         {
             this.Path = path;
+            this.Enabled = enabled;
             SetTraverseSubdirectoriers(traverseSubdirectories);
         }
 
@@ -26,6 +29,28 @@ namespace RandomImageViewer
         public SearchOption GetSearchOption()
         {
             return this.TraverseSubdirectories;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is DirectoryObject @object &&
+                   Path == @object.Path &&
+                   TraverseSubdirectories == @object.TraverseSubdirectories &&
+                   Enabled == @object.Enabled;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -850920300;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Path);
+            hashCode = hashCode * -1521134295 + TraverseSubdirectories.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<bool>.Default.GetHashCode(Enabled);
+            return hashCode;
+        }
+
+        public bool IsEnabled()
+        {
+            return this.Enabled;
         }
     }
 }
