@@ -47,7 +47,6 @@ namespace RandomImageViewer
             _Mode = Properties.Settings.Default.RandomMode ? Mode.Random : Mode.Sequential; // Set mode to random or sequential 
             RadioRandom.Checked = Properties.Settings.Default.RandomMode; // Set random or sequential radio buttons
             RadioSeq.Checked = !RadioRandom.Checked;
-            //TraverseSubdirectoriesCheckBox.Checked = Properties.Settings.Default.SearchOption == SearchOption.AllDirectories; // Set traverse subdirectories
 
             // Set the slideshow timing
             decimal value = Properties.Settings.Default.WaitDuration / 1000; 
