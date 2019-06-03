@@ -33,7 +33,6 @@
             this.MainPictureBox = new System.Windows.Forms.PictureBox();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.TraverseSubdirectoriesCheckBox = new System.Windows.Forms.CheckBox();
             this.SlideshowTiming = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.RadioSeq = new System.Windows.Forms.RadioButton();
@@ -88,28 +87,16 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.TraverseSubdirectoriesCheckBox);
             this.groupBox1.Controls.Add(this.SlideshowTiming);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.RadioSeq);
             this.groupBox1.Controls.Add(this.RadioRandom);
             this.groupBox1.Location = new System.Drawing.Point(7, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(190, 100);
+            this.groupBox1.Size = new System.Drawing.Size(190, 71);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
-            // 
-            // TraverseSubdirectoriesCheckBox
-            // 
-            this.TraverseSubdirectoriesCheckBox.AutoSize = true;
-            this.TraverseSubdirectoriesCheckBox.Location = new System.Drawing.Point(6, 68);
-            this.TraverseSubdirectoriesCheckBox.Name = "TraverseSubdirectoriesCheckBox";
-            this.TraverseSubdirectoriesCheckBox.Size = new System.Drawing.Size(136, 17);
-            this.TraverseSubdirectoriesCheckBox.TabIndex = 9;
-            this.TraverseSubdirectoriesCheckBox.Text = "Traverse subdirectories";
-            this.TraverseSubdirectoriesCheckBox.UseVisualStyleBackColor = true;
-            this.TraverseSubdirectoriesCheckBox.CheckedChanged += new System.EventHandler(this.TraverseSubdirectoriesCheckBox_CheckedChanged);
             // 
             // SlideshowTiming
             // 
@@ -173,9 +160,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.InputDirsPanel.AutoScroll = true;
             this.InputDirsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.InputDirsPanel.Location = new System.Drawing.Point(7, 109);
+            this.InputDirsPanel.Location = new System.Drawing.Point(7, 80);
             this.InputDirsPanel.Name = "InputDirsPanel";
-            this.InputDirsPanel.Size = new System.Drawing.Size(190, 94);
+            this.InputDirsPanel.Size = new System.Drawing.Size(190, 176);
             this.InputDirsPanel.TabIndex = 3;
             this.InputDirsPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.InputDirsPanel_ControlChanged);
             this.InputDirsPanel.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.InputDirsPanel_ControlChanged);
@@ -183,7 +170,7 @@
             // ButtonAddDir
             // 
             this.ButtonAddDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonAddDir.Location = new System.Drawing.Point(122, 209);
+            this.ButtonAddDir.Location = new System.Drawing.Point(122, 262);
             this.ButtonAddDir.Name = "ButtonAddDir";
             this.ButtonAddDir.Size = new System.Drawing.Size(75, 23);
             this.ButtonAddDir.TabIndex = 4;
@@ -218,7 +205,7 @@
             // SlideshowButton
             // 
             this.SlideshowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SlideshowButton.Location = new System.Drawing.Point(7, 238);
+            this.SlideshowButton.Location = new System.Drawing.Point(7, 291);
             this.SlideshowButton.Name = "SlideshowButton";
             this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
             this.SlideshowButton.TabIndex = 16;
@@ -310,7 +297,7 @@
             // ButtonReload
             // 
             this.ButtonReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonReload.Location = new System.Drawing.Point(7, 209);
+            this.ButtonReload.Location = new System.Drawing.Point(7, 262);
             this.ButtonReload.Name = "ButtonReload";
             this.ButtonReload.Size = new System.Drawing.Size(75, 23);
             this.ButtonReload.TabIndex = 12;
@@ -387,7 +374,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel HistoryPanel;
         private System.Windows.Forms.Button OptionsButton;
-        private System.Windows.Forms.CheckBox TraverseSubdirectoriesCheckBox;
         private TimerButton SlideshowButton;
     }
 }

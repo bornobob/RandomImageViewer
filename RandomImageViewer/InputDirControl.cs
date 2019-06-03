@@ -19,6 +19,12 @@ namespace RandomImageViewer
             ImageList.AddDirectory(OldDirectoryObject);
         }
 
+        public void SetArgs(bool subdirectories, bool enabled)
+        {
+            SubdirectoriesCheckbox.Checked = subdirectories;
+            EnabledCheckbox.Checked = enabled;
+        }
+
         public string GetPath()
         {
             return PathTextbox.Text;
@@ -64,6 +70,16 @@ namespace RandomImageViewer
             DeleteButton.Enabled = EnabledCheckbox.Checked;
             SubdirectoriesCheckbox.Enabled = EnabledCheckbox.Checked;
             AlertDirectoryChanged();
+        }
+
+        public bool IsEnabled()
+        {
+            return EnabledCheckbox.Checked;
+        }
+
+        public bool IncludeSubdirectories()
+        {
+            return SubdirectoriesCheckbox.Checked;
         }
     }
 }

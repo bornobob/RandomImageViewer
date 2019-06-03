@@ -47,7 +47,7 @@ namespace RandomImageViewer
             _Mode = Properties.Settings.Default.RandomMode ? Mode.Random : Mode.Sequential; // Set mode to random or sequential 
             RadioRandom.Checked = Properties.Settings.Default.RandomMode; // Set random or sequential radio buttons
             RadioSeq.Checked = !RadioRandom.Checked;
-            TraverseSubdirectoriesCheckBox.Checked = Properties.Settings.Default.SearchOption == SearchOption.AllDirectories; // Set traverse subdirectories
+            //TraverseSubdirectoriesCheckBox.Checked = Properties.Settings.Default.SearchOption == SearchOption.AllDirectories; // Set traverse subdirectories
 
             // Set the slideshow timing
             decimal value = Properties.Settings.Default.WaitDuration / 1000; 
@@ -58,16 +58,7 @@ namespace RandomImageViewer
             SlideshowTiming.Value = value;
 
             // Add saved directories
-            if (Properties.Settings.Default.Paths != null)
-            {
-                foreach (string s in Properties.Settings.Default.Paths)
-                {
-                    if (Directory.Exists(s))
-                    {
-                        AddDirectoryDirect(s);
-                    }
-                }
-            }
+            LoadDirectoriesFromSettings();
 
             // Set window position
             if (Properties.Settings.Default.Location.X != -1 && Properties.Settings.Default.Location.Y != -1)
@@ -81,9 +72,38 @@ namespace RandomImageViewer
             SinkLabel.Focus();
         }
 
-        private void AddDirectoryDirect(string path)
+        private void LoadDirectoriesFromSettings()
+        {
+            if (Properties.Settings.Default.Paths != null)
+            {
+                foreach (string s in Properties.Settings.Default.Paths)
+                {
+                    string path;
+                    bool enabled, option;
+                    if (s.Contains("?"))
+                    {
+                        string[] args = s.Split('?');
+                        path = args[0];
+                        enabled = bool.Parse(args[1]);
+                        option = bool.Parse(args[2]);
+                    } else  // Backward compatibility
+                    {
+                        path = s;
+                        enabled = true;
+                        option = Properties.Settings.Default.SearchOption == SearchOption.AllDirectories;
+                    }
+                    if (Directory.Exists(path))
+                    {
+                        AddDirectoryDirect(path, option, enabled);
+                    }
+                }
+            }
+        }
+
+        private void AddDirectoryDirect(string path, bool subdirectories, bool enabled)
         {
             var inputDir = new InputDirControl(path, this.ImageList);
+            inputDir.SetArgs(subdirectories, enabled);
             InputDirsPanel.Controls.Add(inputDir);
         }
 
@@ -95,7 +115,8 @@ namespace RandomImageViewer
             Properties.Settings.Default.WaitDuration = (int)(SlideshowTiming.Value * 1000);
             foreach (InputDirControl inputDir in this.InputDirsPanel.Controls)
             {
-                Properties.Settings.Default.Paths.Add(inputDir.GetPath());
+                string dir = inputDir.GetPath() + "?" + inputDir.IsEnabled() + "?" + inputDir.IncludeSubdirectories();
+                Properties.Settings.Default.Paths.Add(dir);
             }
             Properties.Settings.Default.WindowSize = this.Size;
             Properties.Settings.Default.State = this.WindowState;
@@ -367,11 +388,6 @@ namespace RandomImageViewer
             string path = Path.Combine(ImageList.GetCurrentImage().GetDirectory(), ImageList.GetCurrentImage().GetFileName());
             string arg = "/select, \"" + path.Replace('/', '\\') + "\"";
             System.Diagnostics.Process.Start("explorer.exe", arg);
-        }
-
-        private void TraverseSubdirectoriesCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            ImageLoadingSearchOption = (TraverseSubdirectoriesCheckBox.Checked) ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
