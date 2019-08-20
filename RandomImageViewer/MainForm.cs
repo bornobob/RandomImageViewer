@@ -248,7 +248,7 @@ namespace RandomImageViewer
         private void SetPictureFieldSize()
         {
             pnlMain.AutoScroll = MainPictureBox.SizeMode != PictureBoxSizeMode.Zoom;
-            if (MainPictureBox.Image != null && pnlMain.AutoScroll)
+            if (ImageList.GetCurrentImage().CanZoom() && MainPictureBox.Image != null && pnlMain.AutoScroll)
             {
                 MainPictureBox.Size = MainPictureBox.Image.Size;
             }
@@ -274,6 +274,7 @@ namespace RandomImageViewer
                 else
                 {
                     MainPictureBox.ImageLocation = img.GetPath();
+                    MainPictureBox.Load();
                 }
                 SetPictureFieldSize();
             }
