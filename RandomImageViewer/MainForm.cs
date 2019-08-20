@@ -20,7 +20,6 @@ namespace RandomImageViewer
         private Thumbnails Thumbnails;
         private KeybindSettingsData KeybindSettings = new KeybindSettingsData();
         private ContextMenu PictureBoxContextMenu = new ContextMenu();
-        private SearchOption ImageLoadingSearchOption;
         private ImageList ImageList;
 
         public MainForm()
@@ -49,7 +48,7 @@ namespace RandomImageViewer
             RadioSeq.Checked = !RadioRandom.Checked;
 
             // Set the slideshow timing
-            decimal value = Properties.Settings.Default.WaitDuration / 1000; 
+            decimal value = Properties.Settings.Default.WaitDuration / 1000;
             if (value < SlideshowTiming.Minimum || value > SlideshowTiming.Maximum)
             {
                 value = 1.5m;
@@ -65,7 +64,7 @@ namespace RandomImageViewer
                 this.StartPosition = FormStartPosition.Manual;
                 this.Location = Properties.Settings.Default.Location;
             }
-            
+
             this.WindowState = Properties.Settings.Default.State;
             if (this.WindowState == FormWindowState.Normal) this.Size = Properties.Settings.Default.WindowSize;
             SinkLabel.Focus();
@@ -85,7 +84,8 @@ namespace RandomImageViewer
                         path = args[0];
                         enabled = bool.Parse(args[1]);
                         option = bool.Parse(args[2]);
-                    } else  // Backward compatibility
+                    }
+                    else  // Backward compatibility
                     {
                         path = s;
                         enabled = true;
@@ -125,7 +125,6 @@ namespace RandomImageViewer
                 Properties.Settings.Default.Location = this.Location;
             }
             Properties.Settings.Default.Save();
-            Properties.Settings.Default.SearchOption = ImageLoadingSearchOption;
         }
 
         public void frmMain_KeyDown(object sender, KeyEventArgs e)
@@ -149,7 +148,7 @@ namespace RandomImageViewer
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideOptions))
             {
-                ToggleOptions();            
+                ToggleOptions();
             }
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.QuitProgram))
             {
@@ -158,10 +157,12 @@ namespace RandomImageViewer
             else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideThumbnails))
             {
                 ToggleHistory();
-            } else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.PrevImage))
+            }
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.PrevImage))
             {
                 PreviousImage();
-            } else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleSlideshow))
+            }
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleSlideshow))
             {
                 SlideshowButton_Click(this, null);
             }
@@ -269,7 +270,8 @@ namespace RandomImageViewer
                 if (img.CanZoom())
                 {
                     MainPictureBox.Image = img.GetImage(this.ZoomFactor);
-                } else
+                }
+                else
                 {
                     MainPictureBox.ImageLocation = img.GetPath();
                 }
@@ -404,7 +406,8 @@ namespace RandomImageViewer
             {
                 frmMain_KeyDown(null, new KeyEventArgs(keyData));
                 return true;
-            } else
+            }
+            else
             {
                 return base.ProcessCmdKey(ref msg, keyData);
             }
