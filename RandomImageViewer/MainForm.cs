@@ -342,7 +342,11 @@ namespace RandomImageViewer
             }
             else if (e.Button == MouseButtons.Right && this.ImageList.GetCurrentImage() != null)
             {
-                PictureBoxContextMenu.Show(MainPictureBox, e.Location);  
+                PictureBoxContextMenu.Show(MainPictureBox, e.Location);
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                pnlMain.MiddleMouseClicked(e.Location);
             }
         }
 
@@ -421,6 +425,19 @@ namespace RandomImageViewer
         private void NrImagesChanged()
         {
             NoImagesLabel.Text = ImageList.GetTotalImages().ToString();
+        }
+
+        private void MainPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                pnlMain.MiddleMouseClicked(e.Location);
+            }
+        }
+
+        private void MainPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            pnlMain.MouseMoved(e.Location);
         }
     }
 }

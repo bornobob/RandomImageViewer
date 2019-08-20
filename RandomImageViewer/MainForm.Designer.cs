@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainPictureBox = new System.Windows.Forms.PictureBox();
-            this.pnlMain = new System.Windows.Forms.Panel();
+            this.pnlMain = new ScrollablePanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SlideshowTiming = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,7 +41,6 @@
             this.ButtonAddDir = new System.Windows.Forms.Button();
             this.SinkLabel = new System.Windows.Forms.Label();
             this.OptionsPanel = new System.Windows.Forms.Panel();
-            this.SlideshowButton = new RandomImageViewer.TimerButton();
             this.OptionsButton = new System.Windows.Forms.Button();
             this.InfoGroupBox = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -53,6 +52,7 @@
             this.ButtonReload = new System.Windows.Forms.Button();
             this.SlideshowTimer = new System.Windows.Forms.Timer(this.components);
             this.HistoryPanel = new System.Windows.Forms.Panel();
+            this.SlideshowButton = new RandomImageViewer.TimerButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -70,6 +70,8 @@
             this.MainPictureBox.TabIndex = 0;
             this.MainPictureBox.TabStop = false;
             this.MainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseClick);
+            this.MainPictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseDoubleClick);
+            this.MainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseMove);
             // 
             // pnlMain
             // 
@@ -202,17 +204,6 @@
             this.OptionsPanel.Size = new System.Drawing.Size(200, 473);
             this.OptionsPanel.TabIndex = 8;
             // 
-            // SlideshowButton
-            // 
-            this.SlideshowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SlideshowButton.Location = new System.Drawing.Point(7, 291);
-            this.SlideshowButton.Name = "SlideshowButton";
-            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
-            this.SlideshowButton.TabIndex = 16;
-            this.SlideshowButton.Text = "Begin Slideshow";
-            this.SlideshowButton.UseVisualStyleBackColor = true;
-            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
-            // 
             // OptionsButton
             // 
             this.OptionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -318,6 +309,17 @@
             this.HistoryPanel.Size = new System.Drawing.Size(677, 111);
             this.HistoryPanel.TabIndex = 9;
             // 
+            // SlideshowButton
+            // 
+            this.SlideshowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SlideshowButton.Location = new System.Drawing.Point(7, 291);
+            this.SlideshowButton.Name = "SlideshowButton";
+            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
+            this.SlideshowButton.TabIndex = 16;
+            this.SlideshowButton.Text = "Begin Slideshow";
+            this.SlideshowButton.UseVisualStyleBackColor = true;
+            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,7 +355,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox MainPictureBox;
-        private System.Windows.Forms.Panel pnlMain;
+        private ScrollablePanel pnlMain;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel InputDirsPanel;
         private System.Windows.Forms.Button ButtonAddDir;

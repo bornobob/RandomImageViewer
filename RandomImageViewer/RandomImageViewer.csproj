@@ -87,6 +87,9 @@
     <Compile Include="AddDirectoryForm.Designer.cs">
       <DependentUpon>AddDirectoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScrollablePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TimerButton.cs">
       <SubType>Component</SubType>
     </Compile>
