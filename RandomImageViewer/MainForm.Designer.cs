@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainPictureBox = new System.Windows.Forms.PictureBox();
-            this.pnlMain = new ScrollablePanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SlideshowTiming = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,38 +51,15 @@
             this.SlideshowTimer = new System.Windows.Forms.Timer(this.components);
             this.HistoryPanel = new System.Windows.Forms.Panel();
             this.SlideshowButton = new RandomImageViewer.TimerButton();
-            ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
-            this.pnlMain.SuspendLayout();
+            this.pnlMain = new RandomImageViewer.ScrollablePanel();
+            this.MainPictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SlideshowTiming)).BeginInit();
             this.OptionsPanel.SuspendLayout();
             this.InfoGroupBox.SuspendLayout();
+            this.pnlMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // MainPictureBox
-            // 
-            this.MainPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.MainPictureBox.Location = new System.Drawing.Point(3, 8);
-            this.MainPictureBox.Name = "MainPictureBox";
-            this.MainPictureBox.Size = new System.Drawing.Size(673, 356);
-            this.MainPictureBox.TabIndex = 0;
-            this.MainPictureBox.TabStop = false;
-            this.MainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseClick);
-            this.MainPictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseDoubleClick);
-            this.MainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseMove);
-            // 
-            // pnlMain
-            // 
-            this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlMain.AutoScroll = true;
-            this.pnlMain.BackColor = System.Drawing.Color.Transparent;
-            this.pnlMain.Controls.Add(this.MainPictureBox);
-            this.pnlMain.Location = new System.Drawing.Point(2, 111);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(678, 364);
-            this.pnlMain.TabIndex = 1;
             // 
             // groupBox1
             // 
@@ -320,6 +295,32 @@
             this.SlideshowButton.UseVisualStyleBackColor = true;
             this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
             // 
+            // pnlMain
+            // 
+            this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlMain.AutoScroll = true;
+            this.pnlMain.BackColor = System.Drawing.Color.Transparent;
+            this.pnlMain.Controls.Add(this.MainPictureBox);
+            this.pnlMain.Location = new System.Drawing.Point(2, 111);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(678, 364);
+            this.pnlMain.TabIndex = 1;
+            // 
+            // MainPictureBox
+            // 
+            this.MainPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.MainPictureBox.ImageLocation = "";
+            this.MainPictureBox.Location = new System.Drawing.Point(3, 8);
+            this.MainPictureBox.Name = "MainPictureBox";
+            this.MainPictureBox.Size = new System.Drawing.Size(673, 356);
+            this.MainPictureBox.TabIndex = 0;
+            this.MainPictureBox.TabStop = false;
+            this.MainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseClick);
+            this.MainPictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseDoubleClick);
+            this.MainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseMove);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,14 +340,14 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.SizeChanged += new System.EventHandler(this.frmMain_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).EndInit();
-            this.pnlMain.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SlideshowTiming)).EndInit();
             this.OptionsPanel.ResumeLayout(false);
             this.InfoGroupBox.ResumeLayout(false);
             this.InfoGroupBox.PerformLayout();
+            this.pnlMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MainPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

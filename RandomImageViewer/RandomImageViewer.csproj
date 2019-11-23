@@ -68,8 +68,18 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -87,9 +97,22 @@
     <Compile Include="AddDirectoryForm.Designer.cs">
       <DependentUpon>AddDirectoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\DirectorySetting.cs" />
+    <Compile Include="Enums\ImageType.cs" />
+    <Compile Include="Enums\KeybindSettings.cs" />
+    <Compile Include="Exceptions\InputArrayIsEmptyException.cs" />
+    <Compile Include="Exceptions\InputArraySizesDifferException.cs" />
+    <Compile Include="Exceptions\NegativeWeightException.cs" />
+    <Compile Include="ImagesSources\LocalImagesSource.cs" />
+    <Compile Include="Images\LocalImage.cs" />
+    <Compile Include="Interfaces\IImage.cs" />
+    <Compile Include="Interfaces\IImagesSource.cs" />
+    <Compile Include="Interfaces\IRandomGenerator.cs" />
+    <Compile Include="RandomGenerators\DefaultRandom.cs" />
     <Compile Include="ScrollablePanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Settings\KeybindSettings.cs" />
     <Compile Include="TimerButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -105,10 +128,10 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Settings\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InputDirControl.cs">
@@ -122,14 +145,13 @@
     <Compile Include="SelectablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Settings.cs" />
     <Compile Include="Thumbnails.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Thumbnails.Designer.cs">
       <DependentUpon>Thumbnails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utility.cs" />
+    <Compile Include="WeightedRandom.cs" />
     <EmbeddedResource Include="AddDirectoryForm.resx">
       <DependentUpon>AddDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -148,12 +170,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Thumbnails.resx">
       <DependentUpon>Thumbnails.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -181,5 +204,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace RandomImageViewer
+﻿namespace RandomImageViewer.Settings
 {
     partial class SettingsForm
     {

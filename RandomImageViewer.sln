@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomImageViewer", "RandomImageViewer\RandomImageViewer.csproj", "{2A659C4A-1B70-403E-B276-EEB578318209}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomImageViewerTests", "RandomImageViewerTests\RandomImageViewerTests.csproj", "{D6CFAD90-A31F-413B-9EC2-7FB038D31734}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2A659C4A-1B70-403E-B276-EEB578318209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A659C4A-1B70-403E-B276-EEB578318209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A659C4A-1B70-403E-B276-EEB578318209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6CFAD90-A31F-413B-9EC2-7FB038D31734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6CFAD90-A31F-413B-9EC2-7FB038D31734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6CFAD90-A31F-413B-9EC2-7FB038D31734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6CFAD90-A31F-413B-9EC2-7FB038D31734}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

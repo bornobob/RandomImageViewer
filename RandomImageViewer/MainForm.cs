@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+using RandomImageViewer.Settings;
+using RandomImageViewer.Enums;
 
 namespace RandomImageViewer
 {
@@ -18,7 +20,7 @@ namespace RandomImageViewer
         private decimal ZoomFactor = 1m;
         private bool InSlideshow = false;
         private Thumbnails Thumbnails;
-        private KeybindSettingsData KeybindSettings = new KeybindSettingsData();
+        private Settings.KeybindSettings KeybindSettings = new Settings.KeybindSettings();
         private ContextMenu PictureBoxContextMenu = new ContextMenu();
         private ImageList ImageList;
 
@@ -134,35 +136,35 @@ namespace RandomImageViewer
                 e.SuppressKeyPress = true;
             }
 
-            if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleZoom))
+            if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ToggleZoom))
             {
                 ToggleSizeMode();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn) || e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomOut))
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ZoomIn) || e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ZoomOut))
             {
                 Zoom(e.KeyCode);
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.NextImage))
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.NextImage))
             {
                 SetImage(true);
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideOptions))
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.HideOptions))
             {
                 ToggleOptions();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.QuitProgram))
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.QuitProgram))
             {
                 this.Close();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.HideThumbnails))
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.HideThumbnails))
             {
                 ToggleHistory();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.PrevImage))
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.PrevImage))
             {
                 PreviousImage();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ToggleSlideshow))
+            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ToggleSlideshow))
             {
                 SlideshowButton_Click(this, null);
             }
@@ -179,7 +181,7 @@ namespace RandomImageViewer
         {
             if (ImageList.GetCurrentImage() != null && ImageList.GetCurrentImage().CanZoom() && MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
             {
-                if (keyCode == (Keys)KeybindSettings.GetSetting(RandomImageViewer.KeybindSettings.ZoomIn))
+                if (keyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ZoomIn))
                 {
                     ZoomFactor *= 1.1m;
                 }

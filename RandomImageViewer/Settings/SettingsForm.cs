@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using RandomImageViewer.Enums;
 
-namespace RandomImageViewer
+
+namespace RandomImageViewer.Settings
 { 
     public partial class SettingsForm : Form
     {
-        private KeybindSettings Editing = KeybindSettings.None;
-        private KeybindSettingsData SettingsData;
+        private Enums.KeybindSettings Editing = Enums.KeybindSettings.None;
+        private KeybindSettings SettingsData;
 
         public SettingsForm()
         {
             InitializeComponent();
-            ToggleButton.Tag = ToggleDeleteButton.Tag = KeybindSettings.ToggleZoom;
-            ZoomInButton.Tag = ZoomInDeleteButton.Tag = KeybindSettings.ZoomIn;
-            ZoomOutButton.Tag = ZoomOutDeleteButton.Tag = KeybindSettings.ZoomOut;
-            HideOptionsButton.Tag = HideOptionsDeleteButton.Tag = KeybindSettings.HideOptions;
-            HideThumbnailsButton.Tag = HideThumbnailsDeleteButton.Tag = KeybindSettings.HideThumbnails;
-            CloseProgramButton.Tag = CloseProgramDeleteButton.Tag = KeybindSettings.QuitProgram;
-            NextImageButton.Tag = NextImageDeleteButton.Tag = KeybindSettings.NextImage;
-            PrevImageButton.Tag = PrevImageDeleteButton.Tag = KeybindSettings.PrevImage;
-            ToggleSlideshowButton.Tag = ToggleSlideshowDeleteButton.Tag = KeybindSettings.ToggleSlideshow;
+            ToggleButton.Tag = ToggleDeleteButton.Tag = Enums.KeybindSettings.ToggleZoom;
+            ZoomInButton.Tag = ZoomInDeleteButton.Tag = Enums.KeybindSettings.ZoomIn;
+            ZoomOutButton.Tag = ZoomOutDeleteButton.Tag = Enums.KeybindSettings.ZoomOut;
+            HideOptionsButton.Tag = HideOptionsDeleteButton.Tag = Enums.KeybindSettings.HideOptions;
+            HideThumbnailsButton.Tag = HideThumbnailsDeleteButton.Tag = Enums.KeybindSettings.HideThumbnails;
+            CloseProgramButton.Tag = CloseProgramDeleteButton.Tag = Enums.KeybindSettings.QuitProgram;
+            NextImageButton.Tag = NextImageDeleteButton.Tag = Enums.KeybindSettings.NextImage;
+            PrevImageButton.Tag = PrevImageDeleteButton.Tag = Enums.KeybindSettings.PrevImage;
+            ToggleSlideshowButton.Tag = ToggleSlideshowDeleteButton.Tag = Enums.KeybindSettings.ToggleSlideshow;
 
-            SettingsData = new KeybindSettingsData();
+            SettingsData = new KeybindSettings();
             LoadTextboxes();
         }
 
@@ -33,11 +35,11 @@ namespace RandomImageViewer
                 try
                 {
                     TextBox box = (TextBox)c;
-                    int value = SettingsData.GetSetting((KeybindSettings)box.Tag);
+                    int value = SettingsData.GetSetting((Enums.KeybindSettings)box.Tag);
                     string text = "NONE";
                     if (value != -1)
                     {
-                        text = ((Keys)SettingsData.GetSetting((KeybindSettings)box.Tag)).ToString();
+                        text = ((Keys)SettingsData.GetSetting((Enums.KeybindSettings)box.Tag)).ToString();
                     }
                     box.Text = text; 
                 }
@@ -47,52 +49,52 @@ namespace RandomImageViewer
 
         private void ClickedSetting(object sender, MouseEventArgs e)
         {
-            if (Editing == KeybindSettings.None)
+            if (Editing == Enums.KeybindSettings.None)
             {
                 TextBox clicked = (TextBox)sender;
-                Editing = (KeybindSettings)clicked.Tag;
+                Editing = (Enums.KeybindSettings)clicked.Tag;
                 clicked.Text = "...";
             }
         }
 
         private void KeydownSetting(object sender, KeyEventArgs e)
         {
-            if (Editing != KeybindSettings.None)
+            if (Editing != Enums.KeybindSettings.None)
             {
                 TextBox typed = GetTextBoxByTag(Editing);
 
-                if (Editing == (KeybindSettings)typed.Tag)
+                if (Editing == (Enums.KeybindSettings)typed.Tag)
                 {
                     int value = (int)e.KeyCode;
                     typed.Text = e.KeyCode.ToString();
-                    Editing = KeybindSettings.None;
-                    SettingsData.SetSetting((KeybindSettings)typed.Tag, value);
+                    Editing = Enums.KeybindSettings.None;
+                    SettingsData.SetSetting((Enums.KeybindSettings)typed.Tag, value);
                     CheckForDuplicates();
                 }
             }
         }
 
-        private TextBox GetTextBoxByTag(KeybindSettings tag)
+        private TextBox GetTextBoxByTag(Enums.KeybindSettings tag)
         {
             switch (tag)
             {
-                case KeybindSettings.HideOptions:
+                case Enums.KeybindSettings.HideOptions:
                     return HideOptionsButton;
-                case KeybindSettings.HideThumbnails:
+                case Enums.KeybindSettings.HideThumbnails:
                     return HideThumbnailsButton;
-                case KeybindSettings.NextImage:
+                case Enums.KeybindSettings.NextImage:
                     return NextImageButton;
-                case KeybindSettings.QuitProgram:
+                case Enums.KeybindSettings.QuitProgram:
                     return CloseProgramButton;
-                case KeybindSettings.ToggleZoom:
+                case Enums.KeybindSettings.ToggleZoom:
                     return ToggleButton;
-                case KeybindSettings.ZoomIn:
+                case Enums.KeybindSettings.ZoomIn:
                     return ZoomInButton;
-                case KeybindSettings.ZoomOut:
+                case Enums.KeybindSettings.ZoomOut:
                     return ZoomOutButton;
-                case KeybindSettings.PrevImage:
+                case Enums.KeybindSettings.PrevImage:
                     return PrevImageButton;
-                case KeybindSettings.ToggleSlideshow:
+                case Enums.KeybindSettings.ToggleSlideshow:
                     return ToggleSlideshowButton;
                 default:
                     return null;
@@ -121,10 +123,10 @@ namespace RandomImageViewer
         private void DeleteSettingButton_Click(object sender, EventArgs e)
         {
             Button s = (Button)sender;
-            TextBox text = GetTextBoxByTag((KeybindSettings)s.Tag);
+            TextBox text = GetTextBoxByTag((Enums.KeybindSettings)s.Tag);
             text.BackColor = System.Drawing.Color.White;
             text.Text = "NONE";
-            SettingsData.SetSetting((KeybindSettings)s.Tag, -1);
+            SettingsData.SetSetting((Enums.KeybindSettings)s.Tag, -1);
             CheckForDuplicates();
         }
 
@@ -132,9 +134,9 @@ namespace RandomImageViewer
         {
             Dictionary<int, List<TextBox>> pickedKeys = new Dictionary<int, List<TextBox>>();
             
-            foreach (KeybindSettings s in (KeybindSettings[])Enum.GetValues(typeof(KeybindSettings)))
+            foreach (Enums.KeybindSettings s in (Enums.KeybindSettings[])Enum.GetValues(typeof(Enums.KeybindSettings)))
             {
-                if (s != KeybindSettings.None)
+                if (s != Enums.KeybindSettings.None)
                 {
                     int value = SettingsData.GetSetting(s);
                     if (value != -1)
