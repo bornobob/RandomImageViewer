@@ -1,4 +1,4 @@
-﻿namespace RandomImageViewer
+﻿namespace RandomImageViewer.Controls
 {
     partial class Thumbnails
     {
@@ -36,6 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "Thumbnails";
             this.Size = new System.Drawing.Size(250, 191);
+            this.Resize += new System.EventHandler(this.Thumbnails_Resize);
             this.ResumeLayout(false);
 
         }

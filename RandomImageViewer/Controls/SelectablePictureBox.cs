@@ -1,35 +1,38 @@
-﻿using System.IO;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using System.Drawing;
 using System;
+using RandomImageViewer.Interfaces;
+using RandomImageViewer.Enums;
 
-namespace RandomImageViewer
+namespace RandomImageViewer.Controls
 {
     public class SelectablePictureBox : PictureBox
     {
-        private bool Selected = false;
-        private ImageObject _Image;
+        private bool _selected = false;
+        private readonly IImage _image;
+        public IThumbnailCreator _thumbnailCreator;
 
-        public SelectablePictureBox(ImageObject image)
+        public SelectablePictureBox(IImage image, IThumbnailCreator thumbnailCreator)
         {
             this.SizeMode = PictureBoxSizeMode.Zoom;
-            this._Image = image;
+            _image = image;
+            _thumbnailCreator = thumbnailCreator;
             SetImage();
-            base.SizeChanged += new EventHandler(this.SizeChanged);
+            base.SizeChanged += new EventHandler(SizeChanged);
         }
 
         public void SetSelected(bool selected)
         {
-            Selected = selected;
-            this.Invalidate();
+            _selected = selected;
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
-            var color = Selected ? Color.Red : Color.LightGray;
+            var color = _selected ? Color.Red : Color.LightGray;
             pe.Graphics.DrawRectangle(new Pen(color, 4f), new Rectangle(0, 0, this.Width, this.Height));
-            if (_Image.GetImageType() == ImageType.Gif)
+            if (_image.GetImageType() == ImageType.Gif)
                 PaintGifText(pe);
         }
 
@@ -44,18 +47,23 @@ namespace RandomImageViewer
 
         private void SetImage()
         {
-            Bitmap thumbnail = this._Image.GetThumbnail(this.Size);
+            Bitmap thumbnail = _thumbnailCreator.CreateThumbnail(_image, new Size(this.Width, this.Height));
             this.Image = thumbnail;
         }
 
         private new void SizeChanged(object sender, EventArgs e)
         {
-            this.Invalidate();
+            Invalidate();
         }
 
         public bool GetSelected()
         {
-            return this.Selected;
+            return _selected;
+        }
+
+        public IImage GetImage()
+        {
+            return _image;
         }
     }
 }

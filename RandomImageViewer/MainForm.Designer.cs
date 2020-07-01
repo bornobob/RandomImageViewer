@@ -39,6 +39,9 @@
             this.ButtonAddDir = new System.Windows.Forms.Button();
             this.SinkLabel = new System.Windows.Forms.Label();
             this.OptionsPanel = new System.Windows.Forms.Panel();
+            this.LoadButton = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.SlideshowButton = new RandomImageViewer.Controls.TimerButton();
             this.OptionsButton = new System.Windows.Forms.Button();
             this.InfoGroupBox = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -47,11 +50,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.NoImagesLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.ButtonReload = new System.Windows.Forms.Button();
             this.SlideshowTimer = new System.Windows.Forms.Timer(this.components);
             this.HistoryPanel = new System.Windows.Forms.Panel();
-            this.SlideshowButton = new RandomImageViewer.TimerButton();
-            this.pnlMain = new RandomImageViewer.ScrollablePanel();
+            this.pnlMain = new RandomImageViewer.Controls.ScrollablePanel();
             this.MainPictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SlideshowTiming)).BeginInit();
@@ -147,9 +148,9 @@
             // ButtonAddDir
             // 
             this.ButtonAddDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonAddDir.Location = new System.Drawing.Point(122, 262);
+            this.ButtonAddDir.Location = new System.Drawing.Point(7, 291);
             this.ButtonAddDir.Name = "ButtonAddDir";
-            this.ButtonAddDir.Size = new System.Drawing.Size(75, 23);
+            this.ButtonAddDir.Size = new System.Drawing.Size(84, 23);
             this.ButtonAddDir.TabIndex = 4;
             this.ButtonAddDir.Text = "Add Source";
             this.ButtonAddDir.UseVisualStyleBackColor = true;
@@ -167,10 +168,11 @@
             // 
             this.OptionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.OptionsPanel.Controls.Add(this.LoadButton);
+            this.OptionsPanel.Controls.Add(this.SaveButton);
             this.OptionsPanel.Controls.Add(this.SlideshowButton);
             this.OptionsPanel.Controls.Add(this.OptionsButton);
             this.OptionsPanel.Controls.Add(this.InfoGroupBox);
-            this.OptionsPanel.Controls.Add(this.ButtonReload);
             this.OptionsPanel.Controls.Add(this.groupBox1);
             this.OptionsPanel.Controls.Add(this.InputDirsPanel);
             this.OptionsPanel.Controls.Add(this.ButtonAddDir);
@@ -179,12 +181,45 @@
             this.OptionsPanel.Size = new System.Drawing.Size(200, 473);
             this.OptionsPanel.TabIndex = 8;
             // 
+            // LoadButton
+            // 
+            this.LoadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.LoadButton.Location = new System.Drawing.Point(111, 320);
+            this.LoadButton.Name = "LoadButton";
+            this.LoadButton.Size = new System.Drawing.Size(84, 23);
+            this.LoadButton.TabIndex = 18;
+            this.LoadButton.Text = "Load";
+            this.LoadButton.UseVisualStyleBackColor = true;
+            this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveButton.Location = new System.Drawing.Point(7, 320);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(84, 23);
+            this.SaveButton.TabIndex = 17;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // SlideshowButton
+            // 
+            this.SlideshowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SlideshowButton.Location = new System.Drawing.Point(7, 262);
+            this.SlideshowButton.Name = "SlideshowButton";
+            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
+            this.SlideshowButton.TabIndex = 16;
+            this.SlideshowButton.Text = "Begin Slideshow";
+            this.SlideshowButton.UseVisualStyleBackColor = true;
+            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
+            // 
             // OptionsButton
             // 
             this.OptionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.OptionsButton.Location = new System.Drawing.Point(115, 320);
+            this.OptionsButton.Location = new System.Drawing.Point(111, 291);
             this.OptionsButton.Name = "OptionsButton";
-            this.OptionsButton.Size = new System.Drawing.Size(75, 23);
+            this.OptionsButton.Size = new System.Drawing.Size(84, 23);
             this.OptionsButton.TabIndex = 15;
             this.OptionsButton.Text = "Options";
             this.OptionsButton.UseVisualStyleBackColor = true;
@@ -260,17 +295,6 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Images Loaded:";
             // 
-            // ButtonReload
-            // 
-            this.ButtonReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ButtonReload.Location = new System.Drawing.Point(7, 262);
-            this.ButtonReload.Name = "ButtonReload";
-            this.ButtonReload.Size = new System.Drawing.Size(75, 23);
-            this.ButtonReload.TabIndex = 12;
-            this.ButtonReload.Text = "Reload";
-            this.ButtonReload.UseVisualStyleBackColor = true;
-            this.ButtonReload.Click += new System.EventHandler(this.ButtonReload_Click);
-            // 
             // SlideshowTimer
             // 
             this.SlideshowTimer.Tick += new System.EventHandler(this.SlideshowTimer_Tick);
@@ -283,17 +307,6 @@
             this.HistoryPanel.Name = "HistoryPanel";
             this.HistoryPanel.Size = new System.Drawing.Size(677, 111);
             this.HistoryPanel.TabIndex = 9;
-            // 
-            // SlideshowButton
-            // 
-            this.SlideshowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SlideshowButton.Location = new System.Drawing.Point(7, 291);
-            this.SlideshowButton.Name = "SlideshowButton";
-            this.SlideshowButton.Size = new System.Drawing.Size(190, 23);
-            this.SlideshowButton.TabIndex = 16;
-            this.SlideshowButton.Text = "Begin Slideshow";
-            this.SlideshowButton.UseVisualStyleBackColor = true;
-            this.SlideshowButton.Click += new System.EventHandler(this.SlideshowButton_Click);
             // 
             // pnlMain
             // 
@@ -315,6 +328,7 @@
             this.MainPictureBox.Location = new System.Drawing.Point(3, 8);
             this.MainPictureBox.Name = "MainPictureBox";
             this.MainPictureBox.Size = new System.Drawing.Size(673, 356);
+            this.MainPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.MainPictureBox.TabIndex = 0;
             this.MainPictureBox.TabStop = false;
             this.MainPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainPictureBox_MouseClick);
@@ -356,7 +370,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox MainPictureBox;
-        private ScrollablePanel pnlMain;
+        private RandomImageViewer.Controls.ScrollablePanel pnlMain;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel InputDirsPanel;
         private System.Windows.Forms.Button ButtonAddDir;
@@ -364,7 +378,6 @@
         private System.Windows.Forms.Panel OptionsPanel;
         private System.Windows.Forms.RadioButton RadioSeq;
         private System.Windows.Forms.RadioButton RadioRandom;
-        private System.Windows.Forms.Button ButtonReload;
         private System.Windows.Forms.Timer SlideshowTimer;
         private System.Windows.Forms.NumericUpDown SlideshowTiming;
         private System.Windows.Forms.Label label4;
@@ -377,7 +390,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel HistoryPanel;
         private System.Windows.Forms.Button OptionsButton;
-        private TimerButton SlideshowButton;
+        private RandomImageViewer.Controls.TimerButton SlideshowButton;
+        private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button LoadButton;
     }
 }
 

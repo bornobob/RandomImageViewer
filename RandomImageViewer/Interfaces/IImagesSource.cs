@@ -2,22 +2,34 @@
 
 namespace RandomImageViewer.Interfaces
 {
+    public delegate void ImageSourceDeleteHandler();
+    public delegate void ImageSourceUpdatedHandler();
+
     public interface IImagesSource
     {
+        event ImageSourceDeleteHandler ImageSourceDelete;
+        event ImageSourceUpdatedHandler ImageSourceUpdated;
+
         /// <summary>
-        /// Retrieve all the images in the iamges source
+        /// Retrieve all the images in the images source
         /// </summary>
         /// <returns>List of <see cref="IImage"/> objects</returns>
         IEnumerable<IImage> GetImages();
 
-        Enums.ImageType GetImageType();
+        Enums.SourceType GetImageType();
 
         string GetSourcePath();
 
-        int GetTotalImages();
+        int GetNrImages();
 
-        void Reload(IEnumerable<string> indexedImages);
+        void IndexImages();
 
-        IImage GetRandomImage();
+        void PrepareRandomImage();
+
+        bool PrepareNextImage();
+
+        IImage GetCurrentImage();
+
+        string Serialize();
     }
 }

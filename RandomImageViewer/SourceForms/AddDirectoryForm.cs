@@ -2,11 +2,11 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace RandomImageViewer
+namespace RandomImageViewer.SourceForms
 {
     public partial class AddDirectoryForm : Form
     {
-        private string Path;
+        private string _path;
 
         public AddDirectoryForm()
         {
@@ -30,7 +30,7 @@ namespace RandomImageViewer
             if (Directory.Exists(PathBox.Text))
             {
                 OkButton.Enabled = true;
-                Path = PathBox.Text;
+                _path = PathBox.Text;
                 ErrorLabel.Text = "";
             }
             else
@@ -52,7 +52,7 @@ namespace RandomImageViewer
 
         public string GetPath()
         {
-            return Path;
+            return _path;
         }
     }
 }

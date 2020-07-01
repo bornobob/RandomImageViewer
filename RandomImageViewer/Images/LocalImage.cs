@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using RandomImageViewer.Enums;
+using System.Linq;
 using RandomImageViewer.Interfaces;
 
 namespace RandomImageViewer.Images
@@ -6,10 +8,12 @@ namespace RandomImageViewer.Images
     public class LocalImage : IImage
     {
         private readonly string _path;
+        private readonly ImageType _imageType;
 
-        public LocalImage(string path)
+        public LocalImage(string path, ImageType imageType)
         {
             _path = path;
+            _imageType = imageType;
         }
 
         public Bitmap GetBitmap()
@@ -17,9 +21,21 @@ namespace RandomImageViewer.Images
             return new Bitmap(_path);
         }
 
-        public Enums.ImageType GetImageType()
+        public string GetDirectoryPath()
         {
-            return Enums.ImageType.LocalImage;
+            var splitPath = GetPath().Split(new char[] { '/', '\\' });
+            return string.Join(System.IO.Path.DirectorySeparatorChar.ToString(), splitPath.Take(splitPath.Length - 1));
+        }
+
+        public string GetImageName()
+        {
+            var splitPath = GetPath().Split(new char[] { '/', '\\' });
+            return splitPath[splitPath.Length - 1];
+        }
+
+        public SourceType GetImageType()
+        {
+            return SourceType.LocalImage;
         }
 
         public string GetPath()
@@ -27,9 +43,9 @@ namespace RandomImageViewer.Images
             return _path;
         }
 
-        public bool IsDownloadable()
+        Enums.ImageType IImage.GetImageType()
         {
-            return false;
+            return _imageType;
         }
     }
 }

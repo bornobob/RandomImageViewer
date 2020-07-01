@@ -5,47 +5,42 @@ using System.Drawing;
 using System.Windows.Forms;
 using RandomImageViewer.Settings;
 using RandomImageViewer.Enums;
+using RandomImageViewer.Interfaces;
+using RandomImageViewer.ImagesSources;
+using RandomImageViewer.SourceModels;
+using RandomImageViewer.ThumbnailCreators;
+using System.Text.Json;
+using RandomImageViewer.SourceForms;
+using RandomImageViewer.Controls;
 
 namespace RandomImageViewer
 {
     public partial class MainForm : Form
     {
-        private enum Mode
-        {
-            Random,
-            Sequential
-        }
-
-        private Mode _Mode;
+        private ImageOrderMode _Mode;
+        private ImageSizeMode _sizeMode = ImageSizeMode.FitToScreen;
         private decimal ZoomFactor = 1m;
         private bool InSlideshow = false;
-        private Thumbnails Thumbnails;
-        private Settings.KeybindSettings KeybindSettings = new Settings.KeybindSettings();
-        private ContextMenu PictureBoxContextMenu = new ContextMenu();
-        private ImageList ImageList;
+        private readonly Thumbnails _thumbnails;
+        private readonly Settings.KeybindSettings _keybindSettings = new Settings.KeybindSettings();
+        private readonly ImageList _imageList;
+        private string _openedSave = null;
 
         public MainForm()
         {
             InitializeComponent();
-            this.ImageList = new ImageList(NrImagesChanged, 10);
-            this.Thumbnails = new Thumbnails(ImageList, ThumbnailSelected);
-            HistoryPanel.Controls.Add(Thumbnails);
-            Thumbnails.Dock = DockStyle.Fill;
-            AddMenuItems();
+            this._imageList = new ImageList();
+            _thumbnails = new Thumbnails(new DefaultThumbnailCreator());
+            HistoryPanel.Controls.Add(_thumbnails);
+            _thumbnails.Dock = DockStyle.Fill;
+            _thumbnails.ImageSelected += ThumbnailSelected;
             LoadSettings();
             SetImage();
         }
 
-        private void AddMenuItems()
-        {
-            var menuItem = new MenuItem("Open image in folder");
-            menuItem.Click += new EventHandler(MainPictureBoxContextMenu_ItemClicked);
-            PictureBoxContextMenu.MenuItems.Add(menuItem);
-        }
-
         private void LoadSettings()
         {
-            _Mode = Properties.Settings.Default.RandomMode ? Mode.Random : Mode.Sequential; // Set mode to random or sequential 
+            _Mode = Properties.Settings.Default.RandomMode ? ImageOrderMode.Random : ImageOrderMode.Sequential; // Set mode to random or sequential 
             RadioRandom.Checked = Properties.Settings.Default.RandomMode; // Set random or sequential radio buttons
             RadioSeq.Checked = !RadioRandom.Checked;
 
@@ -57,9 +52,6 @@ namespace RandomImageViewer
             }
             SlideshowTiming.Value = value;
 
-            // Add saved directories
-            LoadDirectoriesFromSettings();
-
             // Set window position
             if (Properties.Settings.Default.Location.X != -1 && Properties.Settings.Default.Location.Y != -1)
             {
@@ -67,58 +59,21 @@ namespace RandomImageViewer
                 this.Location = Properties.Settings.Default.Location;
             }
 
+            // Open saved file
+            if (Properties.Settings.Default.OpenedSave != null && File.Exists(Properties.Settings.Default.OpenedSave))
+            {
+                LoadFile(Properties.Settings.Default.OpenedSave);
+            }
+
             this.WindowState = Properties.Settings.Default.State;
             if (this.WindowState == FormWindowState.Normal) this.Size = Properties.Settings.Default.WindowSize;
             SinkLabel.Focus();
         }
 
-        private void LoadDirectoriesFromSettings()
-        {
-            if (Properties.Settings.Default.Paths != null)
-            {
-                foreach (string s in Properties.Settings.Default.Paths)
-                {
-                    string path;
-                    bool enabled, option;
-                    if (s.Contains("?"))
-                    {
-                        string[] args = s.Split('?');
-                        path = args[0];
-                        enabled = bool.Parse(args[1]);
-                        option = bool.Parse(args[2]);
-                    }
-                    else  // Backward compatibility
-                    {
-                        path = s;
-                        enabled = true;
-                        option = Properties.Settings.Default.SearchOption == SearchOption.AllDirectories;
-                    }
-                    if (Directory.Exists(path))
-                    {
-                        AddDirectoryDirect(path, option, enabled);
-                    }
-                }
-            }
-        }
-
-        private void AddDirectoryDirect(string path, bool subdirectories, bool enabled)
-        {
-            var inputDir = new InputDirControl(path, this.ImageList);
-            inputDir.SetArgs(subdirectories, enabled);
-            InputDirsPanel.Controls.Add(inputDir);
-        }
-
-
         private void SaveSettings()
         {
             Properties.Settings.Default.RandomMode = RadioRandom.Checked;
-            Properties.Settings.Default.Paths = new System.Collections.Specialized.StringCollection();
             Properties.Settings.Default.WaitDuration = (int)(SlideshowTiming.Value * 1000);
-            foreach (InputDirControl inputDir in this.InputDirsPanel.Controls)
-            {
-                string dir = inputDir.GetPath() + "?" + inputDir.IsEnabled() + "?" + inputDir.IncludeSubdirectories();
-                Properties.Settings.Default.Paths.Add(dir);
-            }
             Properties.Settings.Default.WindowSize = this.Size;
             Properties.Settings.Default.State = this.WindowState;
             if (this.WindowState == FormWindowState.Normal)
@@ -126,6 +81,7 @@ namespace RandomImageViewer
                 Properties.Settings.Default.WindowSize = this.Size;
                 Properties.Settings.Default.Location = this.Location;
             }
+            Properties.Settings.Default.OpenedSave = _openedSave;
             Properties.Settings.Default.Save();
         }
 
@@ -136,61 +92,57 @@ namespace RandomImageViewer
                 e.SuppressKeyPress = true;
             }
 
-            if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ToggleZoom))
+            if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.ToggleZoom))
             {
                 ToggleSizeMode();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ZoomIn) || e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ZoomOut))
+            else if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.ZoomIn) || e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.ZoomOut))
             {
                 Zoom(e.KeyCode);
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.NextImage))
+            else if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.NextImage))
             {
                 SetImage(true);
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.HideOptions))
+            else if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.HideOptions))
             {
                 ToggleOptions();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.QuitProgram))
+            else if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.QuitProgram))
             {
                 this.Close();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.HideThumbnails))
+            else if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.HideThumbnails))
             {
                 ToggleHistory();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.PrevImage))
+            else if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.PrevImage))
             {
                 PreviousImage();
             }
-            else if (e.KeyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ToggleSlideshow))
+            else if (e.KeyCode == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.ToggleSlideshow))
             {
                 SlideshowButton_Click(this, null);
             }
         }
 
-        private void ToggleSizeMode()
+        private void Zoom(Keys key)
         {
-            MainPictureBox.SizeMode = (MainPictureBox.SizeMode == PictureBoxSizeMode.Normal) ? PictureBoxSizeMode.Zoom : PictureBoxSizeMode.Normal;
-            ZoomFactor = 1m;
-            SetPictureZoomSize();
+            if (key == (Keys)_keybindSettings.GetSetting(Enums.KeybindSettings.ZoomIn))
+            {
+                ZoomFactor += (decimal)0.1;
+            } else
+            {
+                ZoomFactor -= (decimal)0.1;
+            }
+            SetPictureFieldSize();
         }
 
-        private void Zoom(Keys keyCode)
+        private void ToggleSizeMode()
         {
-            if (ImageList.GetCurrentImage() != null && ImageList.GetCurrentImage().CanZoom() && MainPictureBox.SizeMode == PictureBoxSizeMode.Normal)
-            {
-                if (keyCode == (Keys)KeybindSettings.GetSetting(Enums.KeybindSettings.ZoomIn))
-                {
-                    ZoomFactor *= 1.1m;
-                }
-                else
-                {
-                    ZoomFactor *= .9m;
-                }
-                SetPictureZoomSize();
-            }
+            _sizeMode = _sizeMode == ImageSizeMode.FitToScreen ? ImageSizeMode.Zoom : ImageSizeMode.FitToScreen;
+            ZoomFactor = 1m;
+            SetPictureFieldSize();
         }
 
         private void ToggleOptions()
@@ -206,8 +158,7 @@ namespace RandomImageViewer
                 pnlMain.Width -= OptionsPanel.Width;
                 HistoryPanel.Width -= OptionsPanel.Width;
             }
-            SetPictureZoomSize();
-            Thumbnails.ResizeThumbnails();
+            SetPictureFieldSize();
         }
 
         private void ToggleHistory()
@@ -217,23 +168,20 @@ namespace RandomImageViewer
             {
                 pnlMain.Location = new Point(2, 2);
                 pnlMain.Height += HistoryPanel.Height;
-                Thumbnails.ResizeThumbnails();
             }
             else
             {
                 pnlMain.Height -= HistoryPanel.Height;
                 pnlMain.Location = new Point(2, HistoryPanel.Height + HistoryPanel.Location.Y);
             }
-            SetPictureZoomSize();
+            SetPictureFieldSize(); 
             SinkLabel.Focus();
             this.BringToFront();
         }
 
         private void PreviousImage()
         {
-            ImageList.SelectPreviousImage();
-            SetPictureZoomSize();
-            Thumbnails.SelectNext();
+            _thumbnails.SelectNext();
             ResetTimer();
         }
 
@@ -249,10 +197,10 @@ namespace RandomImageViewer
 
         private void SetPictureFieldSize()
         {
-            pnlMain.AutoScroll = MainPictureBox.SizeMode != PictureBoxSizeMode.Zoom;
-            if (ImageList.GetCurrentImage().CanZoom() && MainPictureBox.Image != null && pnlMain.AutoScroll)
+            pnlMain.AutoScroll = _sizeMode == ImageSizeMode.Zoom;
+            if (MainPictureBox.Image != null && pnlMain.AutoScroll)
             {
-                MainPictureBox.Size = MainPictureBox.Image.Size;
+                MainPictureBox.Size = CalculateZoomSize(MainPictureBox.Image.Size);
             }
             else
             {
@@ -260,74 +208,80 @@ namespace RandomImageViewer
             }
         }
 
-        private void SetPictureZoomSize()
+        private Size CalculateZoomSize(Size baseSize)
         {
-            ImageObject img = ImageList.GetCurrentImage();
-            if (img != null)
-            {
-                if (MainPictureBox.Image != null)
-                {
-                    MainPictureBox.Image.Dispose();
-                }
-                if (img.CanZoom())
-                {
-                    MainPictureBox.Image = img.GetImage(this.ZoomFactor);
-                }
-                else
-                {
-                    MainPictureBox.ImageLocation = img.GetPath();
-                    MainPictureBox.Load();
-                }
-                SetPictureFieldSize();
-            }
+            return new Size(
+                (int)(baseSize.Width * ZoomFactor), 
+                (int)(baseSize.Height * ZoomFactor)
+            );
+        }
+
+        private void LoadCurrentImage()
+        {
+            MainPictureBox.Image?.Dispose();
+            MainPictureBox.ImageLocation = _imageList.GetCurrentImage().GetPath();
+            MainPictureBox.Load();
+            SetPictureFieldSize();
         }
 
         private void SetImage(bool manual = false)
         {
-            ImageObject img = ImageList.GetNextImage(this._Mode == Mode.Random);
-            if (img != null)
+            bool success = _imageList.LoadNextImage(_Mode == ImageOrderMode.Random);
+            if (success)
             {
                 ZoomFactor = 1m;
-                SetPictureZoomSize();
-                Thumbnails.AddHistoryThumbnail(img);
-                SetImageDetailLabels(img);
+                LoadCurrentImage();
+                SetImageDetailLabels(_imageList.GetCurrentImage());
+                _thumbnails.AddHistoryThumbnail(_imageList.GetCurrentImage());
                 if (manual) ResetTimer();
             }
         }
 
-        private void SetImageDetailLabels(ImageObject image)
+        private void SetImageDetailLabels(IImage image)
         {
-            CurrentImageLabel.Text = image.GetFileName();
-            CurrentDirLabel.Text = image.GetDirectory();
-            this.Text = "Random Image Viewer - " + image.GetFileName();
+            CurrentImageLabel.Text = image.GetImageName();
+            CurrentDirLabel.Text = image.GetDirectoryPath();
+            this.Text = "Random Image Viewer - " + image.GetImageName();
             SinkLabel.Focus();
         }
 
         private void frmMain_SizeChanged(object sender, EventArgs e)
         {
-            if (this.ImageList.GetCurrentImage() != null)
+            if (this._imageList.GetCurrentImage() != null)
             {
-                SetPictureZoomSize();
+                SetPictureFieldSize();
             }
-            Thumbnails.ResizeThumbnails();
         }
 
         private void ButtonAddDir_Click(object sender, EventArgs e)
         {
-            AddDirectory();
+            NewSourceForm newSource = new NewSourceForm();
+            if (newSource.ShowDialog() == DialogResult.OK)
+            {
+                AddImagesSource(newSource.Model);
+                _openedSave = null;
+            }
         }
 
-
-        private void AddDirectory()
+        private void AddImagesSource(BaseModel model)
         {
-            AddDirectoryForm AddDirDialog = new AddDirectoryForm();
-            if (AddDirDialog.ShowDialog(this) == DialogResult.OK)
+            Control newControl;
+            if (model.GetType() == typeof(LocalImagesModel))
             {
-                var inputDir = new InputDirControl(AddDirDialog.GetPath(), this.ImageList);
-                InputDirsPanel.Controls.Add(inputDir);
+                newControl = new InputDirControl((LocalImagesModel)model);
+                model.ModelDelete += () => { InputDirsPanel.Controls.Remove(newControl); _openedSave = null; };
+                IImagesSource imageSource = ImagesSourceFactory.CreateImagesSource(model);
+                _imageList.AddImageSource(imageSource);
+                imageSource.ImageSourceUpdated += NrImagesChanged;
+            } 
+            else
+            {
+                throw new Exception();
             }
+            InputDirsPanel.Controls.Add(newControl);
             SinkLabel.Focus();
         }
+
 
         private void ResetDirectoryLocations()
         {
@@ -345,26 +299,16 @@ namespace RandomImageViewer
             {
                 SinkLabel.Focus();
             }
-            else if (e.Button == MouseButtons.Right && this.ImageList.GetCurrentImage() != null)
-            {
-                PictureBoxContextMenu.Show(MainPictureBox, e.Location);
-            }
             else if (e.Button == MouseButtons.Middle)
             {
                 pnlMain.MiddleMouseClicked(e.Location);
             }
         }
 
-        private void ButtonReload_Click(object sender, EventArgs e)
-        {
-            ImageList.ReIndex();
-            SinkLabel.Focus();
-        }
-
         private void RadioRandom_CheckedChanged(object sender, EventArgs e)
         {
             RadioSeq.Checked = !RadioRandom.Checked;
-            _Mode = RadioRandom.Checked ? Mode.Random : Mode.Sequential;
+            _Mode = RadioRandom.Checked ? ImageOrderMode.Random : ImageOrderMode.Sequential;
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -392,19 +336,12 @@ namespace RandomImageViewer
         {
             (new SettingsForm()).ShowDialog();
             SinkLabel.Focus();
-            KeybindSettings.LoadSettings();
-        }
-
-        private void MainPictureBoxContextMenu_ItemClicked(object sender, EventArgs e)
-        {
-            string path = Path.Combine(ImageList.GetCurrentImage().GetDirectory(), ImageList.GetCurrentImage().GetFileName());
-            string arg = "/select, \"" + path.Replace('/', '\\') + "\"";
-            System.Diagnostics.Process.Start("explorer.exe", arg);
+            _keybindSettings.LoadSettings();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (KeybindSettings.GetSettingsContainArrowKeys() &&
+            if (_keybindSettings.GetSettingsContainArrowKeys() &&
                 (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down))
             {
                 frmMain_KeyDown(null, new KeyEventArgs(keyData));
@@ -416,11 +353,14 @@ namespace RandomImageViewer
             }
         }
 
-        private void ThumbnailSelected()
+        private void ThumbnailSelected(IImage image)
         {
             ZoomFactor = 1m;
-            SetImageDetailLabels(this.ImageList.GetCurrentImage());
-            SetPictureZoomSize();
+            SetImageDetailLabels(image);
+            MainPictureBox.Image?.Dispose();
+            MainPictureBox.ImageLocation = image.GetPath();
+            MainPictureBox.Load();
+            ResetTimer();
         }
 
         private void InputDirsPanel_ControlChanged(object sender, ControlEventArgs e)
@@ -430,7 +370,7 @@ namespace RandomImageViewer
 
         private void NrImagesChanged()
         {
-            NoImagesLabel.Text = ImageList.GetTotalImages().ToString();
+            NoImagesLabel.Text = _imageList.GetTotalImages().ToString();
         }
 
         private void MainPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -444,6 +384,66 @@ namespace RandomImageViewer
         private void MainPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             pnlMain.MouseMoved(e.Location);
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "RIV Sources|*.json";
+            saveFile.Title = "Save RIV Sources";
+            saveFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            saveFile.ShowDialog();
+
+            if (saveFile.FileName != "")
+            {
+                var fs = new StreamWriter(saveFile.FileName);
+                fs.Write(_imageList.Serialize());
+                fs.Flush();
+                fs.Close();
+            }
+            saveFile.Dispose();
+        }
+
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "RIV Sources|*.json";
+            openFile.Title = "Open RIV Sources";
+            openFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFile.ShowDialog();
+
+            if (openFile.FileName != "")
+            {
+                LoadFile(openFile.FileName);
+            }
+        }
+
+        private void LoadFile(string path)
+        {
+            _imageList.DeleteAllSources();
+            InputDirsPanel.Controls.Clear();
+
+            var fs = new StreamReader(path);
+            _openedSave = path;
+            string data = fs.ReadToEnd();
+
+            var settings = new JsonSerializerOptions
+            {
+                Converters = { new ImagesSourceModelConverter() }
+            };
+
+            List<BaseModel> models = (List<BaseModel>)JsonSerializer.Deserialize(data, typeof(List<BaseModel>), settings);
+            foreach (var model in models)
+            {
+                IImagesSource imageSource = ImagesSourceFactory.CreateImagesSource(model);
+                if (imageSource != null) // null if invalid
+                {
+                    _imageList.AddImageSource(imageSource);
+                    imageSource.ImageSourceUpdated += NrImagesChanged;
+                    AddImagesSource(model);
+                }
+            }
+            fs.Close();
         }
     }
 }

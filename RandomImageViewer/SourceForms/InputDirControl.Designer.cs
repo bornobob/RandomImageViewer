@@ -62,7 +62,7 @@
             this.SubdirectoriesCheckbox.TabIndex = 2;
             this.SubdirectoriesCheckbox.Text = "Include subdirectories";
             this.SubdirectoriesCheckbox.UseVisualStyleBackColor = true;
-            this.SubdirectoriesCheckbox.CheckedChanged += new System.EventHandler(this.Checkbox_CheckedChanged);
+            this.SubdirectoriesCheckbox.CheckedChanged += new System.EventHandler(this.SubdirectoriesCheckbox_CheckedChanged);
             // 
             // EnabledCheckbox
             // 
@@ -74,7 +74,7 @@
             this.EnabledCheckbox.Size = new System.Drawing.Size(15, 14);
             this.EnabledCheckbox.TabIndex = 3;
             this.EnabledCheckbox.UseVisualStyleBackColor = true;
-            this.EnabledCheckbox.CheckedChanged += new System.EventHandler(this.Checkbox_EnabledChanged);
+            this.EnabledCheckbox.CheckedChanged += new System.EventHandler(this.EnabledCheckbox_CheckedChanged);
             // 
             // InputDirControl
             // 

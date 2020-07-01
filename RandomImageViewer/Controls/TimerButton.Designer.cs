@@ -1,4 +1,4 @@
-﻿namespace RandomImageViewer
+﻿namespace RandomImageViewer.Controls
 {
     partial class TimerButton
     {

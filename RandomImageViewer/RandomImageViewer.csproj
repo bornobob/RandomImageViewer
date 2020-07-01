@@ -50,13 +50,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>RandomImageViewerKeyfile.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>90F8E92C85F865DF8C5AFE361FACDA4B3B98AE72</ManifestCertificateThumbprint>
@@ -71,14 +72,36 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.7.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.4.7.2\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -91,37 +114,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddDirectoryForm.cs">
+    <Compile Include="SourceForms\AddDirectoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddDirectoryForm.Designer.cs">
+    <Compile Include="SourceForms\AddDirectoryForm.Designer.cs">
       <DependentUpon>AddDirectoryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\DirectorySetting.cs" />
+    <Compile Include="Enums\ImageOrderMode.cs" />
+    <Compile Include="Enums\ImageSizeMode.cs" />
     <Compile Include="Enums\ImageType.cs" />
+    <Compile Include="Enums\SourceType.cs" />
     <Compile Include="Enums\KeybindSettings.cs" />
+    <Compile Include="Exceptions\IndexOutOfRangeException.cs" />
     <Compile Include="Exceptions\InputArrayIsEmptyException.cs" />
     <Compile Include="Exceptions\InputArraySizesDifferException.cs" />
     <Compile Include="Exceptions\NegativeWeightException.cs" />
+    <Compile Include="ImagesSources\BaseImagesSource.cs" />
+    <Compile Include="ImagesSources\ImagesSourceFactory.cs" />
+    <Compile Include="SourceForms\NewSourceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SourceForms\NewSourceForm.Designer.cs">
+      <DependentUpon>NewSourceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SourceModels\ImagesSourceModelConverter.cs" />
     <Compile Include="ImagesSources\LocalImagesSource.cs" />
     <Compile Include="Images\LocalImage.cs" />
     <Compile Include="Interfaces\IImage.cs" />
     <Compile Include="Interfaces\IImagesSource.cs" />
     <Compile Include="Interfaces\IRandomGenerator.cs" />
+    <Compile Include="Interfaces\IThumbnailCreator.cs" />
     <Compile Include="RandomGenerators\DefaultRandom.cs" />
-    <Compile Include="ScrollablePanel.cs">
+    <Compile Include="Controls\ScrollablePanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Settings\KeybindSettings.cs" />
-    <Compile Include="TimerButton.cs">
+    <Compile Include="SourceModels\BaseModel.cs" />
+    <Compile Include="SourceModels\LocalImagesModel.cs" />
+    <Compile Include="ThumbnailCreators\DefaultThumbnailCreator.cs" />
+    <Compile Include="Controls\TimerButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TimerButton.Designer.cs">
+    <Compile Include="Controls\TimerButton.Designer.cs">
       <DependentUpon>TimerButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="DirectoryObject.cs" />
     <Compile Include="ImageList.cs" />
-    <Compile Include="ImageObject.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,31 +172,31 @@
     <Compile Include="Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="InputDirControl.cs">
+    <Compile Include="SourceForms\InputDirControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="InputDirControl.Designer.cs">
+    <Compile Include="SourceForms\InputDirControl.Designer.cs">
       <DependentUpon>InputDirControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectablePictureBox.cs">
+    <Compile Include="Controls\SelectablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Thumbnails.cs">
+    <Compile Include="Controls\Thumbnails.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Thumbnails.Designer.cs">
+    <Compile Include="Controls\Thumbnails.Designer.cs">
       <DependentUpon>Thumbnails.cs</DependentUpon>
     </Compile>
-    <Compile Include="WeightedRandom.cs" />
-    <EmbeddedResource Include="AddDirectoryForm.resx">
+    <Compile Include="RandomGenerators\WeightedRandom.cs" />
+    <EmbeddedResource Include="SourceForms\AddDirectoryForm.resx">
       <DependentUpon>AddDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InputDirControl.resx">
+    <EmbeddedResource Include="SourceForms\InputDirControl.resx">
       <DependentUpon>InputDirControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -173,7 +211,10 @@
     <EmbeddedResource Include="Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Thumbnails.resx">
+    <EmbeddedResource Include="SourceForms\NewSourceForm.resx">
+      <DependentUpon>NewSourceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Thumbnails.resx">
       <DependentUpon>Thumbnails.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -186,8 +227,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="RandomImageViewerKeyfile.pfx" />
-    <None Include="RandomImageViewer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -6,8 +6,12 @@ namespace RandomImageViewer.Interfaces
     {
         string GetPath();
 
-        bool IsDownloadable();
+        string GetDirectoryPath();
+
+        string GetImageName();
 
         Bitmap GetBitmap();
+
+        Enums.ImageType GetImageType();
     }
 }

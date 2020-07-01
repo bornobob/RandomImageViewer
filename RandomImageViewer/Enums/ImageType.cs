@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RandomImageViewer.Enums
+﻿namespace RandomImageViewer.Enums
 {
-    public enum ImageType : int
+    public enum ImageType
     {
-        LocalImage = 1
+        Image = 1,
+        Gif = 2
     }
 }

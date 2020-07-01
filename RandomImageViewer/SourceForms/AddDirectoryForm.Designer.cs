@@ -1,4 +1,4 @@
-﻿namespace RandomImageViewer
+﻿namespace RandomImageViewer.SourceForms
 {
     partial class AddDirectoryForm
     {
